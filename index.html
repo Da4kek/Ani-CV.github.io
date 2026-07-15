@@ -4,393 +4,410 @@
   <title>Anirudh Sowrirajan</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Anirudh Sowrirajan — Computational neuroscience researcher.">
+  <meta name="description" content="Anirudh Sowrirajan — computational neuroscience researcher. Pixel-art personal site with an actual quick-draw game.">
   <meta name="author" content="Anirudh Sowrirajan">
   <link rel="shortcut icon" href="img/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Bangers&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/font-awesome.min.css" />
   <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:       #09111f;
-    --bg-2:     #0d1827;
-    --bg-card:  #101d30;
-    --border:   rgba(99,179,237,0.11);
-    --border-h: rgba(99,179,237,0.32);
-    --blue:     #63b3ed;
-    --teal:     #4fd1c5;
-    --amber:    #f6ad55;
-    --purple:   #c084fc;
-    --green:    #68d391;
-    --text:     #e8edf5;
-    --text-2:   #8fa8c8;
-    --text-3:   #4f6a88;
-    --mono:     'JetBrains Mono','Fira Code',monospace;
-    --head:     'Playfair Display',Georgia,serif;
-    --body:     'Inter',system-ui,sans-serif;
-    --r:        12px;
-    --r-lg:     20px;
-    --t:        0.28s cubic-bezier(0.4,0,0.2,1);
-    --shadow:   0 4px 28px rgba(0,0,0,0.45);
-    --glow:     0 0 48px rgba(99,179,237,0.07);
+    --paper:    #fff1cf;
+    --paper-2:  #ffe6ad;
+    --card:     #fffaf0;
+    --ink:      #17172a;
+    --red:      #ff4136;
+    --blue:     #2e86de;
+    --yellow:   #ffd23f;
+    --green:    #1fa955;
+    --purple:   #8e44ad;
+    --brown:    #7b4b28;
+    --sand:     #e8c88a;
+    --sky:      #8ecae6;
+    --text-2:   #4a4560;
+    --pixel:    'Press Start 2P', monospace;
+    --comic:    'Bangers', cursive;
+    --mono:     'Space Mono', monospace;
+    --shadow:   6px 6px 0 var(--ink);
+    --shadow-sm:4px 4px 0 var(--ink);
+    --t:        0.18s ease;
   }
 
   html { scroll-behavior: smooth; }
-  body { background:var(--bg); color:var(--text); font-family:var(--body); font-size:16px; line-height:1.7; overflow-x:hidden; }
-  a { color:var(--blue); text-decoration:none; transition:color var(--t); }
-  a:hover { color:var(--teal); }
+  body {
+    background: var(--paper); color: var(--ink); font-family: var(--mono);
+    font-size: 16px; line-height: 1.7; overflow-x: hidden; position: relative;
+  }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { color: var(--red); }
 
-  .container { max-width:1060px; margin:0 auto; padding:0 24px; }
-  .section    { padding:96px 0; }
+  /* scanline overlay */
+  body::after {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+    background: repeating-linear-gradient(rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.035) 3px);
+    mix-blend-mode: multiply;
+  }
+
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .section    { padding: 92px 0; position: relative; }
+  .section.dots {
+    background-image: radial-gradient(rgba(23,23,42,0.14) 1.6px, transparent 1.6px);
+    background-size: 14px 14px; background-color: var(--paper-2);
+    border-top: 4px solid var(--ink); border-bottom: 4px solid var(--ink);
+  }
 
   .lbl {
-    display:block;
-    font-family:var(--mono);
-    font-size:0.72rem;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    color:var(--teal);
-    margin-bottom:10px;
+    display: inline-block; font-family: var(--pixel); font-size: 0.62rem;
+    letter-spacing: 0.06em; color: var(--card); background: var(--ink);
+    padding: 6px 10px; margin-bottom: 16px; transform: rotate(-1deg);
   }
   .title {
-    font-family:var(--head);
-    font-size:clamp(1.9rem,4vw,2.7rem);
-    font-weight:700;
-    color:var(--text);
-    line-height:1.15;
-    margin-bottom:14px;
+    font-family: var(--comic); font-size: clamp(2.1rem,5vw,3.4rem);
+    font-weight: 400; color: var(--ink); line-height: 1.05; margin-bottom: 14px;
+    letter-spacing: 0.02em; text-shadow: 3px 3px 0 var(--yellow);
   }
-  .sub { color:var(--text-2); font-size:0.96rem; max-width:560px; margin-bottom:52px; line-height:1.78; }
+  .sub { color: var(--text-2); font-size: 0.95rem; max-width: 580px; margin-bottom: 50px; line-height: 1.75; }
 
   /* reveal */
-  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.6s ease,transform 0.6s ease; }
-  .reveal.visible { opacity:1; transform:none; }
-  .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s} .d4{transition-delay:.4s}
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s} .d4{transition-delay:.32s}
+
+  /* panel = the base "comic panel" unit */
+  .panel {
+    background: var(--card); border: 4px solid var(--ink); box-shadow: var(--shadow);
+  }
 
   /* ── NAV ── */
-  .nav { position:fixed;top:0;left:0;right:0;z-index:100;padding:17px 0;transition:background var(--t),box-shadow var(--t); }
-  .nav.scrolled { background:rgba(9,17,31,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 0 var(--border); }
-  .nav-inner { display:flex;align-items:center;justify-content:space-between;max-width:1060px;margin:0 auto;padding:0 24px; }
-  .nav-logo { font-family:var(--mono);font-size:0.8rem;color:var(--teal);letter-spacing:0.06em; }
-  .nav-links { display:flex;gap:26px;list-style:none; }
-  .nav-links a { font-size:0.84rem;font-weight:500;color:var(--text-2);transition:color var(--t); }
-  .nav-links a:hover { color:var(--text); }
-  .nav-cta { border:1px solid var(--border-h)!important;color:var(--blue)!important;padding:5px 13px!important;border-radius:999px; }
-  .nav-cta:hover { background:rgba(99,179,237,0.08)!important; }
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 14px 0; transition: background var(--t); }
+  .nav.scrolled { background: var(--paper); border-bottom: 4px solid var(--ink); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .nav-logo { font-family: var(--pixel); font-size: 0.7rem; color: var(--ink); }
+  .nav-logo .blk { display: inline-block; width: 8px; height: 14px; background: var(--ink); margin-left: 4px; animation: blink 1s steps(1) infinite; vertical-align: -2px; }
+  @keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+  .nav-links { display: flex; gap: 22px; list-style: none; align-items: center; }
+  .nav-links a { font-size: 0.76rem; font-weight: 700; color: var(--ink); }
+  .nav-links a:hover { color: var(--red); }
+  .nav-cta { border: 3px solid var(--ink) !important; background: var(--yellow); padding: 6px 12px !important; box-shadow: var(--shadow-sm); }
+  .nav-cta:hover { color: var(--ink) !important; transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--ink); }
 
   /* ── HERO ── */
-  .hero { position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden; }
-  #neural-canvas { position:absolute;inset:0;width:100%;height:100%;opacity:0.42; }
-  .hero-content { position:relative;z-index:2;max-width:1060px;margin:0 auto;padding:100px 24px 56px; }
-  .hero-eyebrow { font-family:var(--mono);font-size:0.8rem;color:var(--teal);letter-spacing:0.16em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:11px; }
-  .hero-eyebrow::before { content:'';display:inline-block;width:28px;height:1px;background:var(--teal); }
-  .hero-name { font-family:var(--head);font-size:clamp(3rem,9vw,6.2rem);font-weight:700;line-height:1.03;color:var(--text);margin-bottom:9px; }
-  .hero-name .acc { color:var(--blue); }
-  .hero-role { font-family:var(--head);font-size:clamp(0.98rem,2.2vw,1.35rem);font-style:italic;color:var(--text-2);margin-bottom:22px; }
-  .hero-loc { font-size:1rem;color:var(--text-2);margin-bottom:32px; }
-  .hero-loc .tw { color:var(--amber);font-weight:600; }
-  .hero-bio { max-width:540px;color:var(--text-2);font-size:0.97rem;line-height:1.8;margin-bottom:38px; }
-  .hero-btns { display:flex;gap:13px;flex-wrap:wrap; }
+  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden;
+    background: linear-gradient(180deg, var(--sky) 0%, var(--paper) 78%); }
+  .hero-content { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 130px 24px 60px; }
+  .issue-tag { font-family: var(--pixel); font-size: 0.6rem; background: var(--red); color: #fff; border: 3px solid var(--ink);
+    display: inline-block; padding: 6px 10px; margin-bottom: 22px; transform: rotate(-2deg); box-shadow: var(--shadow-sm); }
 
-  .btn { display:inline-flex;align-items:center;gap:7px;padding:10px 24px;border-radius:999px;font-size:0.87rem;font-weight:600;letter-spacing:0.02em;transition:all var(--t);cursor:pointer;border:none;text-decoration:none; }
-  .btn-p { background:var(--blue);color:#09111f; }
-  .btn-p:hover { background:var(--teal);color:#09111f;transform:translateY(-2px);box-shadow:0 8px 22px rgba(99,179,237,0.28); }
-  .btn-s { background:transparent;border:1px solid var(--border-h);color:var(--text); }
-  .btn-s:hover { background:rgba(99,179,237,0.07);border-color:var(--blue);color:var(--blue);transform:translateY(-2px); }
+  .burst { position: absolute; width: 380px; height: 380px; top: -40px; left: -60px; z-index: 0; opacity: 0.9; pointer-events: none; }
+  .burst i { position: absolute; inset: 0; background: var(--yellow); opacity: 0.75; }
+  .burst i:nth-child(1){ transform: rotate(0deg); }
+  .burst i:nth-child(2){ transform: rotate(22.5deg); }
+  .burst i:nth-child(3){ transform: rotate(45deg); }
+  .burst i:nth-child(4){ transform: rotate(67.5deg); }
 
-  .scroll-hint { position:absolute;bottom:34px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--text-3);font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;animation:bob 2.2s ease-in-out infinite; }
-  @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(7px)} }
+  .hero-name { font-family: var(--pixel); font-size: clamp(1.7rem,5.6vw,3.4rem); line-height: 1.35; color: var(--ink);
+    margin-bottom: 18px; position: relative; z-index: 1; }
+  .hero-name .acc { color: var(--red); -webkit-text-stroke: 1px var(--ink); }
+  .hero-role { font-family: var(--comic); font-size: clamp(1.1rem,2.6vw,1.6rem); color: var(--ink); margin-bottom: 20px;
+    background: var(--card); border: 3px solid var(--ink); display: inline-block; padding: 8px 16px; transform: rotate(-1deg); box-shadow: var(--shadow-sm); }
+  .hero-status { font-family: var(--mono); font-size: 0.88rem; font-weight: 700; color: var(--text-2); margin-bottom: 28px; min-height: 24px; }
+  .hero-status .tw { color: var(--red); }
+  .hero-status .cur { color: var(--ink); animation: blink 0.8s steps(1) infinite; }
+  .hero-bio { max-width: 540px; color: var(--text-2); font-size: 0.94rem; line-height: 1.85; margin-bottom: 36px; }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; font-family: var(--pixel);
+    font-size: 0.72rem; border: 3px solid var(--ink); cursor: pointer; box-shadow: var(--shadow-sm); transition: transform var(--t), box-shadow var(--t); }
+  .btn-p { background: var(--yellow); color: var(--ink); }
+  .btn-s { background: var(--card); color: var(--ink); }
+  .btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+  .btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
+
+  .scroll-hint { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); font-family: var(--pixel);
+    font-size: 0.62rem; color: var(--ink); animation: bob 1.6s ease-in-out infinite; }
+  @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
 
   /* ── STATS ── */
-  .stats-bar { background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:42px 0; }
-  .stats-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:center; }
-  .stat-num { display:block;font-family:var(--head);font-size:2.5rem;font-weight:700;color:var(--blue);line-height:1;margin-bottom:6px; }
-  .stat-lbl { font-size:0.74rem;color:var(--text-3);letter-spacing:0.09em;text-transform:uppercase; }
+  .stats-bar { background: var(--ink); padding: 40px 0; border-top: 4px solid var(--ink); border-bottom: 4px solid var(--ink); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+  .stat-card { background: var(--card); border: 3px solid var(--ink); box-shadow: var(--shadow-sm); padding: 16px 10px; text-align: center; }
+  .stat-num { display: block; font-family: var(--pixel); font-size: 1.6rem; color: var(--red); margin-bottom: 8px; }
+  .stat-lbl { font-size: 0.66rem; color: var(--text-2); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 700; }
 
   /* ── ABOUT ── */
-  .about-grid { display:grid;grid-template-columns:240px 1fr;gap:64px;align-items:start; }
-  .about-photo-wrap { position:relative; }
-  .about-photo { width:100%;aspect-ratio:1;border-radius:var(--r-lg);object-fit:cover;border:1px solid var(--border);display:block; }
-  .about-note { margin-top:22px;padding:20px 22px;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:var(--r); }
-  .about-note p { font-size:0.88rem;color:var(--text-2);line-height:1.75;margin:0; }
-  .about-tags { display:flex;flex-wrap:wrap;gap:7px;margin:22px 0; }
-  .tag { display:inline-block;padding:3px 10px;border-radius:999px;font-size:0.77rem;font-weight:500;border:1px solid; }
-  .t-blue  { color:var(--blue); border-color:rgba(99,179,237,0.28);background:rgba(99,179,237,0.07); }
-  .t-teal  { color:var(--teal); border-color:rgba(79,209,197,0.28);background:rgba(79,209,197,0.07); }
-  .t-amber { color:var(--amber);border-color:rgba(246,173,85,0.28);background:rgba(246,173,85,0.07); }
-  .about-body { color:var(--text-2);font-size:0.93rem;line-height:1.82;margin-bottom:14px; }
-  .about-body strong { color:var(--text); }
+  .about-grid { display: grid; grid-template-columns: 240px 1fr; gap: 56px; align-items: start; }
+  .avatar-wrap { position: relative; }
+  .avatar-panel { background: var(--sand); border: 4px solid var(--ink); box-shadow: var(--shadow); padding: 18px; }
+  .avatar-panel svg { width: 100%; height: auto; display: block; image-rendering: pixelated; }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 22px; }
+  .tag { display: inline-block; padding: 5px 11px; font-size: 0.7rem; font-weight: 700; border: 2px solid var(--ink); background: var(--card); }
+  .t-blue  { color: var(--blue); }
+  .t-teal  { color: var(--green); }
+  .t-amber { color: var(--red); }
+  .about-body { color: var(--text-2); font-size: 0.94rem; line-height: 1.85; margin-bottom: 14px; }
+  .about-body strong { color: var(--ink); }
 
-  /* ── PHILOSOPHY ── */
-  .philosophy { background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
-  .hypo-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px; }
-  .hypo-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;cursor:pointer;transition:all var(--t);position:relative;overflow:hidden; }
-  .hypo-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px; }
-  .hypo-card:nth-child(1)::before { background:var(--blue); }
-  .hypo-card:nth-child(2)::before { background:var(--teal); }
-  .hypo-card:nth-child(3)::before { background:var(--amber); }
-  .hypo-card:hover { border-color:var(--border-h);box-shadow:var(--glow);transform:translateY(-3px); }
-  .hypo-icon { font-size:1.9rem;margin-bottom:16px;display:block; }
-  .hypo-title { font-family:var(--head);font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:10px;line-height:1.3; }
-  .hypo-teaser { font-size:0.87rem;color:var(--text-2);line-height:1.72;margin-bottom:16px; }
-  .hypo-body { font-size:0.845rem;color:var(--text-2);line-height:1.78;max-height:0;overflow:hidden;opacity:0;transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1),opacity 0.3s ease; }
-  .hypo-body p { margin-bottom:11px; }
-  .hypo-body p:last-child { margin-bottom:0; }
-  .hypo-body strong { color:var(--text); }
-  .hypo-body em { color:var(--blue);font-style:italic; }
-  .hypo-card.open .hypo-body { max-height:1200px;opacity:1; }
-  .hypo-more { display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:0.72rem;font-weight:500;letter-spacing:0.05em;margin-top:12px;user-select:none; }
-  .hypo-card:nth-child(1) .hypo-more { color:var(--blue); }
-  .hypo-card:nth-child(2) .hypo-more { color:var(--teal); }
-  .hypo-card:nth-child(3) .hypo-more { color:var(--amber); }
-  .hypo-more .htog::after { content:'Expand →'; }
-  .hypo-card.open .hypo-more .htog::after { content:'Collapse ↑'; }
+  /* ── HYPOTHESES ── */
+  .hypo-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+  .hypo-card { padding: 26px; cursor: pointer; position: relative; }
+  .hypo-issue { font-family: var(--pixel); font-size: 0.58rem; color: var(--red); margin-bottom: 12px; display: block; }
+  .hypo-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
+  .hypo-title { font-family: var(--comic); font-size: 1.25rem; color: var(--ink); margin-bottom: 10px; line-height: 1.25; }
+  .hypo-teaser { font-size: 0.87rem; color: var(--text-2); line-height: 1.7; margin-bottom: 14px; }
+  .hypo-body { font-size: 0.85rem; color: var(--text-2); line-height: 1.78; max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease; }
+  .hypo-body p { margin-bottom: 11px; }
+  .hypo-body p:last-child { margin-bottom: 0; }
+  .hypo-body strong { color: var(--ink); }
+  .hypo-body em { color: var(--blue); font-style: italic; }
+  .hypo-card.open .hypo-body { max-height: 1200px; opacity: 1; }
+  .hypo-more { display: inline-flex; gap: 5px; font-family: var(--pixel); font-size: 0.62rem; color: var(--red); margin-top: 14px; }
+  .hypo-more .htog::after { content: 'OPEN FILE ▸'; }
+  .hypo-card.open .hypo-more .htog::after { content: 'CLOSE FILE ▴'; }
 
-  /* ── THOUGHT LAB MINI-SCREEN ── */
-  .lab-preview-section{background:var(--bg);border-top:1px solid var(--border);}
-  .miniscreen-wrap{
-    max-width:980px;margin:44px auto 0;padding:0 20px;
-    border-radius:12px;overflow:hidden;
-    box-shadow:0 32px 80px rgba(0,0,0,0.55),0 0 0 1px rgba(255,255,255,0.05);
-  }
-  .ms-chrome{
-    background:#252525;padding:9px 14px;display:flex;align-items:center;
-    gap:10px;border-bottom:1px solid #111;
-  }
-  .ms-dots{display:flex;gap:6px;}
-  .ms-dots span{width:12px;height:12px;border-radius:50%;display:block;}
-  .ms-dots span:nth-child(1){background:#ff5f57;}
-  .ms-dots span:nth-child(2){background:#febc2e;}
-  .ms-dots span:nth-child(3){background:#28c840;}
-  .ms-urlbar{
-    flex:1;background:#3a3a3a;border-radius:5px;padding:3px 14px;
-    font-family:var(--mono);font-size:0.7rem;color:#777;text-align:center;
-  }
-  .ms-viewport{
-    width:100%;height:540px;overflow:hidden;position:relative;
-    cursor:none;background:#d4d0c8;
-  }
-  .ms-viewport *{cursor:none!important;}
-  .ms-cursor{
-    position:absolute;width:11px;height:17px;pointer-events:none;z-index:999;
-    top:80px;left:160px;
-    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='17'%3E%3Cpolygon points='1,1 1,13 4,10 6,15 8,14 6,9 10,9' fill='%23000000' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E") no-repeat;
-  }
-  /* Win95 app shell */
-  .w95{
-    width:1480px;height:832px;
-    transform:scale(0.6486);transform-origin:top left;
-    font-family:'Tahoma','Arial',sans-serif;font-size:11px;
-    background:#d4d0c8;display:flex;flex-direction:column;
-    color:#000;user-select:none;
-  }
-  .w95-titlebar{
-    background:linear-gradient(to right,#000080,#1084d0);
-    padding:3px 6px;display:flex;align-items:center;gap:5px;
-    color:#fff;font-weight:bold;font-size:11px;flex-shrink:0;
-  }
-  .w95-titlebar-btns{margin-left:auto;display:flex;gap:2px;}
-  .w95-titlebar-btns span{
-    width:16px;height:14px;background:#d4d0c8;font-size:10px;color:#000;
-    border:1px solid;border-color:#fff #808080 #808080 #fff;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .w95-nav{
-    background:#d4d0c8;border-bottom:2px solid #808080;
-    display:flex;gap:2px;padding:4px 4px 0;flex-shrink:0;
-  }
-  .w95-tab{
-    padding:4px 16px;font-size:11px;background:#bcb8b0;
-    border:1px solid;border-color:#fff #808080 #808080 #fff;
-    border-bottom:none;cursor:pointer;position:relative;top:1px;
-    font-family:inherit;
-  }
-  .w95-tab.active{
-    background:#ece9d8;padding-top:5px;
-    border-bottom:1px solid #ece9d8;z-index:1;
-  }
-  .w95-body{flex:1;display:flex;overflow:hidden;}
-  .w95-sidebar{
-    width:240px;flex-shrink:0;background:#ece9d8;
-    border-right:2px solid #808080;
-    padding:8px;display:flex;flex-direction:column;gap:6px;overflow:hidden;
-  }
-  .w95-groupbox{
-    border:2px groove #a8a8a8;padding:10px 8px 8px;position:relative;
-  }
-  .w95-grouplabel{
-    position:absolute;top:-7px;left:6px;background:#ece9d8;
-    padding:0 3px;font-weight:bold;font-size:10px;
-  }
-  .w95-lbl{font-size:10px;margin-bottom:2px;display:block;}
-  .w95-inp,.w95-ta,.w95-sel{
-    width:100%;box-sizing:border-box;
-    border:1px solid;border-color:#808080 #dfdfdf #dfdfdf #808080;
-    background:#fff;padding:2px 4px;
-    font-family:inherit;font-size:11px;outline:none;margin-bottom:4px;
-  }
-  .w95-ta{height:56px;resize:none;}
-  .w95-sel{height:20px;}
-  .w95-btn{
-    width:100%;background:#d4d0c8;font-family:inherit;font-size:11px;
-    border:1px solid;border-color:#fff #808080 #808080 #fff;
-    padding:3px 8px;cursor:pointer;
-  }
-  .w95-depth{border:2px groove #a8a8a8;padding:8px;}
-  .w95-depth-title{font-weight:bold;font-size:10px;margin-bottom:4px;}
-  .w95-range{width:100%;margin:3px 0;}
-  .w95-depth-labels{display:flex;justify-content:space-between;font-size:9px;color:#555;}
-  .w95-stats{display:flex;gap:4px;margin-top:2px;}
-  .w95-stat{
-    flex:1;border:1px solid;border-color:#808080 #fff #fff #808080;
-    background:#d4d0c8;padding:6px;text-align:center;
-  }
-  .w95-stat b{font-size:20px;display:block;line-height:1.2;}
-  .w95-stat-lbl{font-size:9px;color:#555;}
-  .w95-main{flex:1;background:#fff;display:flex;flex-direction:column;overflow:hidden;}
-  .w95-list-hdr{
-    background:#ece9d8;border-bottom:1px solid #808080;
-    padding:4px 10px;font-weight:bold;font-size:11px;flex-shrink:0;
-  }
-  .w95-list{flex:1;overflow-y:auto;}
-  .w95-card{border-bottom:1px solid #e0e0e0;padding:7px 10px;}
-  .w95-card.sel{background:#000080;color:#fff;}
-  .w95-card-title{
-    font-weight:bold;font-size:11px;white-space:nowrap;
-    overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;
-  }
-  .w95-card-preview{
-    font-size:10px;color:#555;white-space:nowrap;
-    overflow:hidden;text-overflow:ellipsis;margin-bottom:4px;
-  }
-  .w95-card.sel .w95-card-preview{color:#aaa;}
-  .w95-card-row{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;}
-  .w95-badge{
-    background:#d4d0c8;border:1px solid #808080;
-    padding:0 5px;font-size:9px;white-space:nowrap;flex-shrink:0;
-  }
-  .w95-badge.blue{background:#000080;color:#fff;}
-  .w95-tag{background:#ffffe1;border:1px solid #aaa;padding:0 4px;font-size:9px;white-space:nowrap;}
-  .w95-card-btns{margin-left:auto;display:flex;gap:2px;flex-shrink:0;}
-  .w95-cbtn{
-    background:#d4d0c8;border:1px solid;
-    border-color:#fff #808080 #808080 #fff;
-    padding:1px 6px;font-size:10px;font-family:inherit;cursor:pointer;
-  }
-  .w95-cbtn.red{color:#cc0000;}
-  .w95-statusbar{
-    background:#d4d0c8;border-top:2px solid #808080;
-    display:flex;flex-shrink:0;
-  }
-  .w95-spanel{
-    border:1px solid;border-color:#808080 #fff #fff #808080;
-    padding:2px 10px;font-size:10px;
-  }
-  .w95-spanel:first-child{flex:1;}
+  /* ── LAB PREVIEW ── */
+  .lab-frame { max-width: 1000px; margin: 56px auto 0; }
+  .lab-frame:first-of-type { margin-top: 40px; }
+  .lab-caption { font-family: var(--comic); font-size: 1.2rem; background: var(--yellow); border: 4px solid var(--ink);
+    display: inline-block; padding: 8px 18px; margin-bottom: 14px; transform: rotate(-1deg); box-shadow: var(--shadow-sm); }
+  .lab-desc { font-size: 0.85rem; color: var(--text-2); line-height: 1.75; max-width: 680px; margin-bottom: 18px; }
+  .miniscreen-wrap { border: 4px solid var(--ink); box-shadow: var(--shadow); overflow: hidden; }
+
+  /* ── BENCHLOG TERMINAL RECREATION ── */
+  .term-frame { border: 4px solid var(--ink); box-shadow: var(--shadow); overflow: hidden; background: #140A00; }
+  .term-body { font-family: var(--mono); }
+  .term-topbar { display: flex; align-items: center; gap: 16px; padding: 10px 16px; flex-wrap: wrap; }
+  .term-logo { color: #FFBB44; font-weight: 700; font-size: 0.82rem; }
+  .term-cursor { color: #7A4700; animation: blink 1s steps(1) infinite; }
+  .term-tabs { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 0.72rem; }
+  .term-tab { color: #484848; padding: 2px 6px; }
+  .term-tab.active { background: #FF9500; color: #000; font-weight: 700; padding: 2px 6px; }
+  .term-sep { color: #7A4700; }
+  .term-clock { margin-left: auto; color: #7A4700; font-size: 0.72rem; }
+  .term-rule { height: 2px; background: #7A4700; opacity: 0.6; }
+  .term-list { padding: 14px 18px; }
+  .term-row { font-size: 0.8rem; color: #E0D5C0; line-height: 2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .term-row.sel { background: rgba(255,149,0,0.08); }
+  .ti { display: inline-block; width: 14px; }
+  .ti.ongoing { color: #FFE600; }
+  .ti.done { color: #00FF9F; }
+  .ti.abandoned { color: #FF453A; }
+  .tg { color: #00FF9F; margin-left: 8px; }
+  .tf { color: #7A4700; margin-left: 8px; }
+  .term-status { background: #140A00; color: #7A4700; border-top: 2px solid #7A4700; padding: 7px 16px; font-size: 0.68rem; }
+
+  /* ── SCRATCHPAD RECREATION ── */
+  .sp-frame { border: 4px solid var(--ink); box-shadow: var(--shadow); overflow: hidden; }
+  .sp-body { display: flex; height: 460px; background: #0a0e14; font-family: var(--mono); }
+  .sp-sidebar { width: 176px; flex-shrink: 0; background: #12161f; border-right: 1px solid #232a38; padding: 16px 12px; display: flex; flex-direction: column; }
+  .sp-logo { font-weight: 700; font-size: 0.95rem; color: #00f0ff; }
+  .sp-logo .q { color: #ff2bd6; }
+  .sp-tagline { font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: #7a8699; margin: 4px 0 18px; }
+  .sp-nav { display: flex; flex-direction: column; gap: 3px; }
+  .sp-nav-item { padding: 7px 8px; border-radius: 5px; font-size: 0.72rem; color: #7a8699; }
+  .sp-nav-item.active { background: rgba(0,240,255,0.1); color: #00f0ff; font-weight: 700; }
+  .sp-lock { margin-top: auto; font-size: 0.7rem; color: #232a38; padding: 7px 8px; }
+  .sp-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .sp-topbar { height: 36px; flex-shrink: 0; border-bottom: 1px solid #232a38; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; font-size: 0.62rem; color: #7a8699; }
+  .sp-back { color: #45505f; }
+  .sp-breadcrumb { letter-spacing: 0.2em; }
+  .sp-content { padding: 16px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px; }
+  .sp-section-hdr { font-weight: 700; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
+  .sp-section-hdr.cyan { color: #00f0ff; } .sp-section-hdr.violet { color: #7b5cff; }
+  .sp-section-hdr.magenta { color: #ff2bd6; } .sp-section-hdr.dim { color: #7a8699; }
+  .sp-section-sub { font-size: 0.66rem; color: #7a8699; }
+  .sp-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin-top: 8px; }
+  .sp-card { background: #12161f; border: 1px solid #232a38; border-radius: 6px; padding: 8px 10px; display: flex; flex-direction: column; gap: 3px; }
+  .sp-card.comic { border-left: 3px solid #ff2bd6; }
+  .sp-card b { font-size: 0.72rem; color: #e6f1ff; font-weight: 700; }
+  .sp-card span { font-size: 0.6rem; color: #7a8699; display: flex; align-items: center; gap: 5px; }
+  .sp-card span em { color: #ff2bd6; font-style: normal; border: 1px solid rgba(255,43,214,0.4); padding: 0 4px; border-radius: 3px; font-size: 0.55rem; text-transform: uppercase; }
+  .ms-chrome { background: #252525; padding: 9px 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #111; }
+  .ms-dots { display: flex; gap: 6px; }
+  .ms-dots span { width: 12px; height: 12px; border-radius: 50%; display: block; }
+  .ms-dots span:nth-child(1){ background: #ff5f57; }
+  .ms-dots span:nth-child(2){ background: #febc2e; }
+  .ms-dots span:nth-child(3){ background: #28c840; }
+  .ms-urlbar { flex: 1; background: #3a3a3a; border-radius: 5px; padding: 3px 14px; font-family: var(--mono); font-size: 0.7rem; color: #777; text-align: center; }
+  .ms-viewport { width: 100%; height: 540px; overflow: hidden; position: relative; cursor: none; background: #d4d0c8; }
+  .ms-viewport * { cursor: none !important; }
+  .ms-cursor { position: absolute; width: 11px; height: 17px; pointer-events: none; z-index: 999; top: 80px; left: 160px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='17'%3E%3Cpolygon points='1,1 1,13 4,10 6,15 8,14 6,9 10,9' fill='%23000000' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E") no-repeat; }
+  .w95 { width: 1480px; height: 832px; transform: scale(0.6486); transform-origin: top left; font-family: 'Tahoma','Arial',sans-serif;
+    font-size: 11px; background: #d4d0c8; display: flex; flex-direction: column; color: #000; user-select: none; }
+  .w95-titlebar { background: linear-gradient(to right,#000080,#1084d0); padding: 3px 6px; display: flex; align-items: center; gap: 5px; color: #fff; font-weight: bold; font-size: 11px; flex-shrink: 0; }
+  .w95-titlebar-btns { margin-left: auto; display: flex; gap: 2px; }
+  .w95-titlebar-btns span { width: 16px; height: 14px; background: #d4d0c8; font-size: 10px; color: #000; border: 1px solid; border-color: #fff #808080 #808080 #fff; display: flex; align-items: center; justify-content: center; }
+  .w95-nav { background: #d4d0c8; border-bottom: 2px solid #808080; display: flex; gap: 2px; padding: 4px 4px 0; flex-shrink: 0; }
+  .w95-tab { padding: 4px 16px; font-size: 11px; background: #bcb8b0; border: 1px solid; border-color: #fff #808080 #808080 #fff; border-bottom: none; cursor: pointer; position: relative; top: 1px; font-family: inherit; }
+  .w95-tab.active { background: #ece9d8; padding-top: 5px; border-bottom: 1px solid #ece9d8; z-index: 1; }
+  .w95-body { flex: 1; display: flex; overflow: hidden; }
+  .w95-sidebar { width: 240px; flex-shrink: 0; background: #ece9d8; border-right: 2px solid #808080; padding: 8px; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
+  .w95-groupbox { border: 2px groove #a8a8a8; padding: 10px 8px 8px; position: relative; }
+  .w95-grouplabel { position: absolute; top: -7px; left: 6px; background: #ece9d8; padding: 0 3px; font-weight: bold; font-size: 10px; }
+  .w95-lbl { font-size: 10px; margin-bottom: 2px; display: block; }
+  .w95-inp,.w95-ta,.w95-sel { width: 100%; box-sizing: border-box; border: 1px solid; border-color: #808080 #dfdfdf #dfdfdf #808080; background: #fff; padding: 2px 4px; font-family: inherit; font-size: 11px; outline: none; margin-bottom: 4px; }
+  .w95-ta { height: 56px; resize: none; }
+  .w95-sel { height: 20px; }
+  .w95-btn { width: 100%; background: #d4d0c8; font-family: inherit; font-size: 11px; border: 1px solid; border-color: #fff #808080 #808080 #fff; padding: 3px 8px; cursor: pointer; }
+  .w95-depth { border: 2px groove #a8a8a8; padding: 8px; }
+  .w95-depth-title { font-weight: bold; font-size: 10px; margin-bottom: 4px; }
+  .w95-range { width: 100%; margin: 3px 0; }
+  .w95-depth-labels { display: flex; justify-content: space-between; font-size: 9px; color: #555; }
+  .w95-stats { display: flex; gap: 4px; margin-top: 2px; }
+  .w95-stat { flex: 1; border: 1px solid; border-color: #808080 #fff #fff #808080; background: #d4d0c8; padding: 6px; text-align: center; }
+  .w95-stat b { font-size: 20px; display: block; line-height: 1.2; }
+  .w95-stat-lbl { font-size: 9px; color: #555; }
+  .w95-main { flex: 1; background: #fff; display: flex; flex-direction: column; overflow: hidden; }
+  .w95-list-hdr { background: #ece9d8; border-bottom: 1px solid #808080; padding: 4px 10px; font-weight: bold; font-size: 11px; flex-shrink: 0; }
+  .w95-list { flex: 1; overflow-y: auto; }
+  .w95-card { border-bottom: 1px solid #e0e0e0; padding: 7px 10px; }
+  .w95-card.sel { background: #000080; color: #fff; }
+  .w95-card-title { font-weight: bold; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+  .w95-card-preview { font-size: 10px; color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
+  .w95-card.sel .w95-card-preview { color: #aaa; }
+  .w95-card-row { display: flex; align-items: center; gap: 4px; flex-wrap: nowrap; }
+  .w95-badge { background: #d4d0c8; border: 1px solid #808080; padding: 0 5px; font-size: 9px; white-space: nowrap; flex-shrink: 0; }
+  .w95-badge.blue { background: #000080; color: #fff; }
+  .w95-tag { background: #ffffe1; border: 1px solid #aaa; padding: 0 4px; font-size: 9px; white-space: nowrap; }
+  .w95-card-btns { margin-left: auto; display: flex; gap: 2px; flex-shrink: 0; }
+  .w95-cbtn { background: #d4d0c8; border: 1px solid; border-color: #fff #808080 #808080 #fff; padding: 1px 6px; font-size: 10px; font-family: inherit; cursor: pointer; }
+  .w95-cbtn.red { color: #cc0000; }
+  .w95-statusbar { background: #d4d0c8; border-top: 2px solid #808080; display: flex; flex-shrink: 0; }
+  .w95-spanel { border: 1px solid; border-color: #808080 #fff #fff #808080; padding: 2px 10px; font-size: 10px; }
+  .w95-spanel:first-child { flex: 1; }
 
   /* ── TIMELINE ── */
-  .timeline { position:relative;padding-left:24px; }
-  .timeline::before { content:'';position:absolute;left:0;top:10px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--blue) 0%,transparent 100%); }
-  .tl-item { position:relative;padding-left:28px;margin-bottom:44px; }
-  .tl-item::before { content:'';position:absolute;left:-30px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--bg-card);border:2px solid var(--blue);box-shadow:0 0 0 4px rgba(99,179,237,0.09); }
-  .tl-item:first-child::before { background:var(--blue); }
-  .tl-date { font-family:var(--mono);font-size:0.7rem;color:var(--text-3);letter-spacing:0.08em;margin-bottom:4px;display:flex;align-items:center;gap:7px; }
-  .badge { font-size:0.65rem;padding:2px 7px;border-radius:999px;font-weight:600; }
-  .badge-g { background:rgba(79,209,197,0.12);color:var(--teal); }
-  .tl-role { font-size:0.97rem;font-weight:600;color:var(--text);margin-bottom:2px;line-height:1.4; }
-  .tl-org  { font-size:0.83rem;color:var(--blue);margin-bottom:8px;font-weight:500; }
-  .tl-pts  { list-style:none;padding:0; }
-  .tl-pts li { font-size:0.845rem;color:var(--text-2);line-height:1.65;padding-left:12px;position:relative;margin-bottom:3px; }
-  .tl-pts li::before { content:'–';position:absolute;left:0;color:var(--text-3); }
+  .timeline { position: relative; padding-left: 26px; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 6px; bottom: 0; width: 4px; background: var(--ink); }
+  .tl-item { position: relative; padding: 18px 20px; margin-bottom: 28px; }
+  .tl-item::before { content: ''; position: absolute; left: -38px; top: 22px; width: 14px; height: 14px; background: var(--yellow); border: 3px solid var(--ink); }
+  .tl-date { font-family: var(--pixel); font-size: 0.6rem; color: var(--text-2); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .badge { font-size: 0.6rem; padding: 3px 8px; font-weight: 700; border: 2px solid var(--ink); }
+  .badge-g { background: var(--green); color: #fff; }
+  .tl-role { font-family: var(--comic); font-size: 1.15rem; color: var(--ink); margin-bottom: 2px; line-height: 1.35; }
+  .tl-org  { font-size: 0.83rem; color: var(--blue); margin-bottom: 10px; font-weight: 700; }
+  .tl-pts  { list-style: none; padding: 0; }
+  .tl-pts li { font-size: 0.85rem; color: var(--text-2); line-height: 1.65; padding-left: 16px; position: relative; margin-bottom: 4px; }
+  .tl-pts li::before { content: '▸'; position: absolute; left: 0; color: var(--red); }
 
   /* ── PUBLICATIONS ── */
-  .pub-section { background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
-  .pub-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:16px; }
-  .pub-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:all var(--t);display:flex;flex-direction:column;gap:9px; }
-  .pub-card:hover { border-color:var(--border-h);transform:translateY(-2px);box-shadow:var(--shadow); }
-  .pub-meta { display:flex;align-items:center;gap:8px;flex-wrap:wrap; }
-  .pub-date { font-family:var(--mono);font-size:0.7rem;color:var(--text-3); }
-  .pub-badge { font-size:0.65rem;font-weight:600;padding:2px 7px;border-radius:999px;letter-spacing:0.03em; }
-  .pb-ieee    { background:rgba(99,179,237,0.12);color:var(--blue); }
-  .pb-journal { background:rgba(79,209,197,0.12);color:var(--teal); }
-  .pb-pre     { background:rgba(246,173,85,0.12);color:var(--amber); }
-  .pub-title  { font-size:0.9rem;font-weight:600;color:var(--text);line-height:1.44;flex:1; }
-  .pub-title a { color:inherit; }
-  .pub-title a:hover { color:var(--blue); }
-  .pub-auth   { font-size:0.76rem;color:var(--text-3); }
+  .pub-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
+  .pub-card { padding: 20px; display: flex; flex-direction: column; gap: 9px; transition: transform var(--t); }
+  .pub-card:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--ink); }
+  .pub-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .pub-date { font-family: var(--pixel); font-size: 0.6rem; color: var(--text-2); }
+  .pub-badge { font-size: 0.62rem; font-weight: 700; padding: 3px 8px; border: 2px solid var(--ink); }
+  .pb-ieee    { background: var(--blue); color: #fff; }
+  .pb-journal { background: var(--green); color: #fff; }
+  .pb-pre     { background: var(--yellow); color: var(--ink); }
+  .pub-title  { font-size: 0.92rem; font-weight: 700; color: var(--ink); line-height: 1.45; flex: 1; }
+  .pub-title a { color: inherit; }
+  .pub-title a:hover { color: var(--red); }
+  .pub-auth   { font-size: 0.76rem; color: var(--text-2); }
 
   /* ── PROJECTS ── */
-  .projects-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:20px; }
-  .proj-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:32px;transition:all var(--t);position:relative;overflow:hidden; }
-  .proj-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px; }
-  .proj-card:nth-child(1)::before { background:var(--blue); }
-  .proj-card:nth-child(2)::before { background:var(--purple); }
-  .proj-card:hover { border-color:var(--border-h);box-shadow:var(--glow);transform:translateY(-3px); }
-  .proj-name { font-family:var(--head);font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:9px; }
-  .proj-tagline { font-size:0.875rem;color:var(--text-2);line-height:1.75;margin-bottom:16px; }
-  .proj-tech { display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px; }
-  .tech-pill { font-family:var(--mono);font-size:0.67rem;color:var(--teal);border:1px solid rgba(79,209,197,0.18);background:rgba(79,209,197,0.05);padding:3px 8px;border-radius:999px; }
-  .tech-pill.purple { color:var(--purple);border-color:rgba(192,132,252,0.18);background:rgba(192,132,252,0.05); }
+  .projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 22px; }
+  .proj-card { padding: 30px; transition: transform var(--t); }
+  .proj-card:hover { transform: translate(-2px,-2px); box-shadow: 9px 9px 0 var(--ink); }
+  .proj-name { font-family: var(--comic); font-size: 1.6rem; color: var(--ink); margin-bottom: 10px; }
+  .proj-tagline { font-size: 0.87rem; color: var(--text-2); line-height: 1.75; margin-bottom: 18px; }
+  .proj-tech { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
+  .tech-pill { font-family: var(--pixel); font-size: 0.55rem; color: var(--ink); border: 2px solid var(--ink); background: var(--green); padding: 4px 8px; }
+  .tech-pill.purple { background: var(--purple); color: #fff; }
 
   /* ── INTERESTS ── */
-  .interests-section { background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
-  .clusters-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:22px; }
-  .cluster { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:24px; }
-  .cluster-title { font-family:var(--mono);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:13px;padding-bottom:10px;border-bottom:1px solid var(--border); }
-  .cluster:nth-child(1) .cluster-title { color:var(--blue); }
-  .cluster:nth-child(2) .cluster-title { color:var(--teal); }
-  .cluster:nth-child(3) .cluster-title { color:var(--amber); }
-  .cluster:nth-child(4) .cluster-title { color:var(--purple); }
-  .cluster-tags { display:flex;flex-wrap:wrap;gap:6px; }
-  .itag { font-size:0.79rem;color:var(--text-2);background:var(--bg-2);border:1px solid var(--border);padding:3px 10px;border-radius:999px;transition:all var(--t);cursor:default; }
-  .itag:hover { color:var(--text);border-color:var(--border-h); }
+  .clusters-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+  .cluster { padding: 22px; }
+  .cluster-title { font-family: var(--pixel); font-size: 0.65rem; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 3px solid var(--ink); }
+  .cluster:nth-child(1) .cluster-title { color: var(--blue); }
+  .cluster:nth-child(2) .cluster-title { color: var(--green); }
+  .cluster:nth-child(3) .cluster-title { color: var(--red); }
+  .cluster:nth-child(4) .cluster-title { color: var(--purple); }
+  .cluster-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .itag { font-size: 0.78rem; color: var(--ink); background: var(--paper); border: 2px solid var(--ink); padding: 4px 10px; }
 
   /* ── ACHIEVEMENTS ── */
-  .ach-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
-  .ach-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:22px;text-align:center;transition:all var(--t); }
-  .ach-card:hover { border-color:var(--border-h);transform:translateY(-2px); }
-  .ach-icon { font-size:1.8rem;margin-bottom:10px; }
-  .ach-title { font-size:0.86rem;font-weight:600;color:var(--text);margin-bottom:4px;line-height:1.35; }
-  .ach-detail { font-size:0.76rem;color:var(--text-3); }
+  .ach-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+  .ach-card { padding: 24px; text-align: center; transition: transform var(--t); }
+  .ach-card:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--ink); }
+  .ach-icon { font-size: 1.8rem; margin-bottom: 12px; }
+  .ach-title { font-size: 0.87rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; line-height: 1.35; }
+  .ach-detail { font-size: 0.76rem; color: var(--text-2); }
 
   /* ── QUOTE ── */
-  .quote-section { padding:100px 0;text-align:center; }
-  .quote-wrap { max-width:640px;margin:0 auto;position:relative; }
-  .quote-mark { position:absolute;top:-28px;left:-8px;font-family:var(--head);font-size:7rem;color:var(--blue);opacity:0.10;line-height:1;user-select:none; }
-  .quote-text { font-family:var(--head);font-size:clamp(1.5rem,3.2vw,2.4rem);font-style:italic;color:var(--text);line-height:1.45;margin-bottom:20px;position:relative; }
-  .quote-attr { font-family:var(--mono);font-size:0.76rem;color:var(--text-3);letter-spacing:0.1em;text-transform:uppercase; }
+  .quote-section { padding: 100px 0; text-align: center; }
+  .quote-wrap { max-width: 660px; margin: 0 auto; }
+  .quote-bubble { background: var(--card); border: 4px solid var(--ink); box-shadow: var(--shadow); padding: 36px 32px; position: relative; }
+  .quote-bubble::after { content: ''; position: absolute; bottom: -22px; left: 60px; width: 0; height: 0;
+    border-left: 14px solid transparent; border-right: 14px solid transparent; border-top: 22px solid var(--ink); }
+  .quote-bubble::before { content: ''; position: absolute; bottom: -16px; left: 64px; width: 0; height: 0;
+    border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 16px solid var(--card); z-index: 1; }
+  .quote-text { font-family: var(--comic); font-size: clamp(1.4rem,3vw,2rem); color: var(--ink); line-height: 1.4; margin-bottom: 14px; }
+  .quote-attr { font-family: var(--pixel); font-size: 0.62rem; color: var(--text-2); margin-top: 16px; display: block; }
+
+  /* ── SHOOTING GALLERY ── */
+  .gallery-section { background: var(--sand); border-top: 4px solid var(--ink); border-bottom: 4px solid var(--ink); }
+  .gallery-hud { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin: 24px 0; }
+  .hud-chip { font-family: var(--pixel); font-size: 0.68rem; background: var(--ink); color: #fff; padding: 10px 14px; border: 3px solid var(--ink); }
+  .hud-chip.score { background: var(--red); }
+  .hud-chip.best { background: var(--purple); }
+  .gallery-scene { position: relative; height: 340px; border: 4px solid var(--ink); box-shadow: var(--shadow); overflow: hidden;
+    background: linear-gradient(180deg, var(--sky) 0%, var(--sky) 55%, var(--sand) 55%, #d9b877 100%); }
+  .g-sun { position: absolute; top: 26px; right: 46px; width: 44px; height: 44px; background: var(--yellow); border: 3px solid var(--ink); border-radius: 50%; }
+  .g-mtn { position: absolute; bottom: 44%; left: 0; width: 100%; height: 60px; opacity: 0.55; }
+  .g-mtn div { position: absolute; bottom: 0; width: 0; height: 0; border-left: 70px solid transparent; border-right: 70px solid transparent; border-bottom: 60px solid var(--brown); }
+  .g-mtn div:nth-child(1){ left: -20px; }
+  .g-mtn div:nth-child(2){ left: 110px; height: 40px; }
+  .g-mtn div:nth-child(3){ left: 260px; }
+  .g-mtn div:nth-child(4){ left: 420px; height: 45px; }
+  .gallery-slots { position: absolute; bottom: 24px; left: 0; width: 100%; display: grid; grid-template-columns: repeat(4,1fr); gap: 0; padding: 0 30px; }
+  .gallery-slot { height: 96px; position: relative; display: flex; align-items: flex-end; justify-content: center; }
+  .gallery-slot .hole { position: absolute; bottom: 0; width: 66px; height: 20px; background: #6b4423; border: 3px solid var(--ink); border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+  .gallery-slot .target { position: absolute; bottom: 12px; width: 56px; height: 56px; cursor: crosshair; animation: pop 0.15s ease-out; }
+  .gallery-slot .target svg { width: 100%; height: 100%; image-rendering: pixelated; shape-rendering: crispEdges; }
+  @keyframes pop { from { transform: translateY(20px) scale(0.7); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+  .float-score { position: absolute; font-family: var(--pixel); font-size: 0.9rem; pointer-events: none; animation: floatup 0.6s ease-out forwards; z-index: 20; }
+  @keyframes floatup { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-40px); opacity: 0; } }
+  .gallery-msg { font-family: var(--comic); font-size: 1.3rem; margin-top: 18px; min-height: 32px; }
+  .gallery-legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 18px; font-size: 0.78rem; color: var(--text-2); }
+  .gallery-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .gallery-legend b { color: var(--ink); }
 
   /* ── FOOTER ── */
-  footer { background:var(--bg-2);border-top:1px solid var(--border);padding:40px 0; }
-  .footer-inner { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px; }
-  .footer-logo { font-family:var(--mono);font-size:0.78rem;color:var(--text-3); }
-  .footer-socials { display:flex;gap:16px;list-style:none; }
-  .footer-socials a { color:var(--text-3);font-size:1.05rem;transition:color var(--t); }
-  .footer-socials a:hover { color:var(--blue); }
-  .footer-copy { font-size:0.76rem;color:var(--text-3); }
-
-  /* typed cursor */
-  .typed-cursor { color:var(--amber);animation:blink 0.72s infinite;font-weight:300; }
-  @keyframes blink { 0%,100%{opacity:1}50%{opacity:0} }
+  footer { background: var(--ink); padding: 40px 0; }
+  .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; }
+  .footer-logo { font-family: var(--pixel); font-size: 0.62rem; color: var(--card); }
+  .footer-socials { display: flex; gap: 14px; list-style: none; }
+  .footer-socials a { color: var(--card); font-size: 1.1rem; background: var(--paper); border: 2px solid var(--card); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; }
+  .footer-socials a:hover { color: var(--ink); background: var(--yellow); }
+  .footer-copy { font-size: 0.72rem; color: var(--sand); font-family: var(--mono); }
 
   /* responsive */
   @media(max-width:920px){
-    .about-grid{grid-template-columns:1fr;gap:40px}
-    .about-photo-wrap{max-width:200px}
+    .about-grid{grid-template-columns:1fr;gap:36px}
+    .avatar-wrap{max-width:220px}
     .hypo-grid{grid-template-columns:1fr}
     .pub-grid{grid-template-columns:1fr}
     .projects-grid{grid-template-columns:1fr}
     .stats-grid{grid-template-columns:repeat(2,1fr)}
     .clusters-grid{grid-template-columns:1fr}
     .ach-grid{grid-template-columns:1fr}
+    .gallery-slots{grid-template-columns:repeat(2,1fr)}
     .nav-links{display:none}
   }
   @media(max-width:600px){
-    .section{padding:60px 0}
-    .hero-name{font-size:clamp(2.5rem,11vw,3.8rem)}
+    .section{padding:56px 0}
+    .hero-name{font-size:clamp(1.3rem,7vw,2.4rem)}
+    .gallery-scene{height:400px}
+    .sp-body{height:auto}
+    .sp-sidebar{width:120px;padding:12px 8px}
+    .sp-nav-item{font-size:0.64rem}
+    .sp-grid{grid-template-columns:1fr}
+    .term-clock{display:none}
   }
   </style>
 </head>
@@ -399,13 +416,13 @@
 <!-- NAV -->
 <nav class="nav" id="main-nav">
   <div class="nav-inner">
-    <span class="nav-logo">ani.sowrirajan</span>
+    <span class="nav-logo">ANI_SOWRIRAJAN.EXE<span class="blk"></span></span>
     <ul class="nav-links">
       <li><a href="#about-section">About</a></li>
-      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#hypotheses">Hypotheses</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#publications">Publications</a></li>
-      <li><a href="#projects">Projects</a></li>
+      <li><a href="#gallery">Quick Draw</a></li>
       <li><a href="https://da4kek.github.io/writeups/" target="_blank" class="nav-cta">Blog</a></li>
     </ul>
   </div>
@@ -413,33 +430,32 @@
 
 <!-- HERO -->
 <section class="hero">
-  <canvas id="neural-canvas"></canvas>
+  <div class="burst"><i></i><i></i><i></i><i></i></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">Computational Neuroscience · AI in Healthcare</div>
-    <h1 class="hero-name">Anirudh<br><span class="acc">Sowrirajan</span></h1>
-    <p class="hero-role">Building bridges between brains and algorithms</p>
-    <p class="hero-loc">Currently in <span class="tw"><span id="typed"></span></span></p>
+    <span class="issue-tag">ISSUE #01 · ORIGIN</span>
+    <h1 class="hero-name">ANIRUDH<br><span class="acc">SOWRIRAJAN</span></h1>
+    <p class="hero-role">Computational neuroscientist by day, pixel outlaw by night</p>
+    <p class="hero-status"><span class="tw" id="typed"></span><span class="cur">▌</span></p>
     <p class="hero-bio">
-      I work at the intersection of computational neuroscience, AI, and clinical
-      research — trying to understand how the brain fails, and how to catch it
-      before it does.
+      I study why brains break — mostly Alzheimer's, mostly with AI and a lot of MRI scans.
+      This site used to sound like a press release. Now it's a comic book with a saloon in it.
     </p>
     <div class="hero-btns">
-      <a href="#experience" class="btn btn-p">My Work</a>
-      <a href="mailto:anisri477@gmail.com" class="btn btn-s"><i class="fa fa-envelope"></i> Get in touch</a>
+      <a href="#experience" class="btn btn-p">▶ SEE MY WORK</a>
+      <a href="mailto:anisri477@gmail.com" class="btn btn-s"><i class="fa fa-envelope"></i> SAY HOWDY</a>
     </div>
   </div>
-  <div class="scroll-hint"><span>scroll</span><i class="fa fa-chevron-down"></i></div>
+  <div class="scroll-hint">▼ PRESS TO CONTINUE ▼</div>
 </section>
 
 <!-- STATS -->
 <div class="stats-bar">
   <div class="container">
     <div class="stats-grid">
-      <div class="reveal"><span class="stat-num">4</span><span class="stat-lbl">Publications</span></div>
-      <div class="reveal d1"><span class="stat-num">4</span><span class="stat-lbl">Research Institutions</span></div>
-      <div class="reveal d2"><span class="stat-num">3.9</span><span class="stat-lbl">GPA / 4.0</span></div>
-      <div class="reveal d3"><span class="stat-num">∞</span><span class="stat-lbl">Hypothesis Space</span></div>
+      <div class="stat-card reveal"><span class="stat-num">4</span><span class="stat-lbl">Publications</span></div>
+      <div class="stat-card reveal d1"><span class="stat-num">4</span><span class="stat-lbl">Research Labs</span></div>
+      <div class="stat-card reveal d2"><span class="stat-num">3.9</span><span class="stat-lbl">GPA / 4.0</span></div>
+      <div class="stat-card reveal d3"><span class="stat-num">∞</span><span class="stat-lbl">Hypothesis Space</span></div>
     </div>
   </div>
 </div>
@@ -448,82 +464,103 @@
 <section class="section" id="about-section">
   <div class="container">
     <div class="about-grid">
-      <div class="about-photo-wrap reveal">
-        <img src="img/me.jpg" alt="Anirudh Sowrirajan" class="about-photo">
+      <div class="avatar-wrap reveal">
+        <div class="avatar-panel">
+          <svg viewBox="0 0 16 16" shape-rendering="crispEdges">
+            <rect x="6" y="0" width="4" height="1" fill="#3a2a1e"/>
+            <rect x="5" y="1" width="6" height="1" fill="#3a2a1e"/>
+            <rect x="2" y="2" width="12" height="1" fill="#2a1d14"/>
+            <rect x="3" y="3" width="10" height="1" fill="#ff4136"/>
+            <rect x="4" y="4" width="8" height="1" fill="#e8b382"/>
+            <rect x="4" y="5" width="8" height="1" fill="#e8b382"/>
+            <rect x="5" y="5" width="1" height="1" fill="#17172a"/>
+            <rect x="10" y="5" width="1" height="1" fill="#17172a"/>
+            <rect x="4" y="6" width="8" height="1" fill="#e8b382"/>
+            <rect x="4" y="7" width="8" height="1" fill="#5a3d2b"/>
+            <rect x="5" y="8" width="6" height="1" fill="#e8b382"/>
+            <rect x="6" y="9" width="4" height="1" fill="#e8b382"/>
+            <rect x="3" y="10" width="10" height="1" fill="#2e86de"/>
+            <rect x="2" y="11" width="12" height="1" fill="#2e86de"/>
+            <rect x="2" y="12" width="12" height="1" fill="#2e86de"/>
+            <rect x="2" y="13" width="12" height="1" fill="#2e86de"/>
+            <rect x="2" y="14" width="12" height="1" fill="#2e86de"/>
+            <rect x="2" y="15" width="12" height="1" fill="#2e86de"/>
+          </svg>
+        </div>
       </div>
       <div class="reveal d1">
-        <span class="lbl">About</span>
-        <h2 class="title">The person<br>behind the papers</h2>
+        <span class="lbl">Origin Story</span>
+        <h2 class="title">Not the person<br>behind the papers</h2>
         <div class="about-tags">
           <span class="tag t-blue">Computational Neuroscience</span>
           <span class="tag t-teal">Alzheimer's Research</span>
           <span class="tag t-teal">Neuroimaging</span>
           <span class="tag t-blue">ML &amp; AI</span>
-          <span class="tag t-amber">Chennai</span>
         </div>
         <p class="about-body">
-          B.Tech CSE (AI &amp; ML) at SRM Institute, <strong>Best Outgoing Student</strong>,
-          GPA 3.9/4.0. Currently building AI-driven neuroimaging systems at
-          <strong>RADAI (IIT Bombay)</strong>. Previously at NIMHANS, iBrains Centre, and
-          KCDH IIT Bombay.
+          I treat the brain like buggy legacy code — poorly documented, full of edge cases,
+          and somehow still running. My job is finding where it breaks before it actually does.
         </p>
         <p class="about-body">
-          I approach neuroscience the way a physicist approaches complex systems —
-          searching for the underlying principles that govern how neural circuits
-          stabilize, fail, and recover.
+          Most days that means building AI tools for neuroimaging. Some days it means
+          arguing with an ODE solver until 2am. I'm told that's normal for people in this field.
         </p>
-        <div class="about-note">
-          <p>My grandfather was diagnosed with Alzheimer's. Watching him decline gave
-          this research an urgency that no academic motivation could replace.</p>
-        </div>
+        <p class="about-body">
+          <strong>No dramatic backstory here</strong> — just someone who found a hard problem
+          and couldn't stop pulling the thread. B.Tech CSE (AI &amp; ML), SRM Institute,
+          Best Outgoing Student, GPA 3.9/4.0. Currently building AI-driven neuroimaging
+          systems at <strong>RADAI (IIT Bombay)</strong>. Previously at NIMHANS, iBrains, and KCDH IIT Bombay.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PHILOSOPHY -->
-<section class="section philosophy" id="philosophy">
+<!-- HYPOTHESES -->
+<section class="section dots" id="hypotheses">
   <div class="container">
-    <span class="lbl reveal">Explored Hypotheses</span>
+    <span class="lbl reveal">The Theory Vault</span>
     <h2 class="title reveal">How I think about the brain</h2>
-    <p class="sub reveal d1">Working arguments I'm still refining. Click any card to read the full hypothesis.</p>
+    <p class="sub reveal d1">Half-baked working arguments I keep refining. Click a file to open it.</p>
     <div class="hypo-grid">
 
-      <div class="hypo-card reveal" onclick="toggleHypo(this)">
+      <div class="panel hypo-card reveal" onclick="toggleHypo(this)">
+        <span class="hypo-issue">CASE FILE #001</span>
         <span class="hypo-icon">🧠</span>
-        <h3 class="hypo-title">Circuits, Connectomics &amp; Alzheimer's</h3>
-        <p class="hypo-teaser">Psychiatric disorders and Alzheimer's may share an early substrate at the circuit level — long before symptoms appear.</p>
+        <h3 class="hypo-title">Circuits, connectomics &amp; Alzheimer's</h3>
+        <p class="hypo-teaser">What if Alzheimer's and psychiatric disorders are the same crime, in different chapters?</p>
         <div class="hypo-body">
-          <p>Psychiatry has historically operated in symptom space. Neurodegeneration research defined Alzheimer's through late-stage markers — amyloid plaques, tau tangles — which are reliable for diagnosis but are endpoints, not origins.</p>
-          <p>My argument: <strong>early AD may reflect failures in firing homeostasis within cortico-hippocampal circuits</strong>. Disease reframed as a problem of network regulation rather than isolated molecular pathology.</p>
-          <p>Depression, anxiety, and chronic stress may represent early, <em>reversible</em> perturbations of systems that later undergo irreversible failure in AD. The circuit-centric view unifies psychiatry and neurodegeneration in a single mechanistic framework.</p>
-          <p>Central question: do psychiatric interventions — drugs, therapy, sleep, exercise — stabilize vulnerable circuits, or increase long-term fragility? Preventive logic: not just how circuits break, but how they're preserved across a lifespan.</p>
+          <p>Psychiatry lives in symptom space. Alzheimer's research lives in late-stage markers — plaques, tangles — reliable for diagnosis, useless for origins.</p>
+          <p>My bet: <strong>early AD is a failure in firing homeostasis within cortico-hippocampal circuits</strong> — a network regulation problem wearing a molecular-pathology costume.</p>
+          <p>Depression, anxiety, chronic stress — maybe early, <em>reversible</em> versions of the same circuit failure that goes irreversible in AD.</p>
+          <p>Open question: do therapy, sleep, and drugs stabilize vulnerable circuits, or quietly make them more fragile? Still trying to answer that without getting laughed out of a conference.</p>
         </div>
         <span class="hypo-more"><span class="htog"></span></span>
       </div>
 
-      <div class="hypo-card reveal d1" onclick="toggleHypo(this)">
+      <div class="panel hypo-card reveal d1" onclick="toggleHypo(this)">
+        <span class="hypo-issue">CASE FILE #002</span>
         <span class="hypo-icon">📐</span>
-        <h3 class="hypo-title">What if a physicist viewed AD?</h3>
-        <p class="hypo-teaser">Disease progression as a trajectory through high-dimensional biological state space. The apparent complexity may be a coordinate problem, not a biological one.</p>
+        <h3 class="hypo-title">What if a physicist looked at Alzheimer's?</h3>
+        <p class="hypo-teaser">Disease as a trajectory through state space. Maybe the complexity is a coordinate problem, not a biology problem.</p>
         <div class="hypo-body">
-          <p>Most frameworks treat biological processes as static measurements or probabilistic associations. They miss how variables jointly evolve across time within structured biological systems.</p>
-          <p>Each individual is a vector of measurable variables — genetics, molecular biomarkers, circuit measures, structural imaging, behavioral states — evolving as a <strong>dynamical system</strong>.</p>
-          <p>From physics: <strong>nonlinear dynamics often become tractable through transformations where they appear linear</strong>. Amyloid accumulation, tau propagation, and synaptic dysfunction may harmonize across individuals in the right coordinate system.</p>
-          <p>Steeper trajectories signal accelerating circuit instability; flatter ones indicate resilience. AD as a long-term outcome of a system gradually approaching a regime of instability — shaped over decades.</p>
+          <p>Most models treat biology as static measurements. They miss how variables move together over time as one system.</p>
+          <p>Each person is a vector — genetics, biomarkers, imaging, behavior — evolving as a <strong>dynamical system</strong>. Nonlinear things often turn linear if you rotate the coordinates enough.</p>
+          <p>Yes, I did try to explain Alzheimer's with the same math a physicist uses for a pendulum. No, I'm not sorry. Steeper trajectories mean instability; flatter ones mean resilience.</p>
         </div>
         <span class="hypo-more"><span class="htog"></span></span>
       </div>
 
-      <div class="hypo-card reveal d2" onclick="toggleHypo(this)">
+      <div class="panel hypo-card reveal d2" onclick="toggleHypo(this)">
         <span class="hypo-icon">⚡</span>
-        <h3 class="hypo-title">Can you harvest electricity from the brain?</h3>
-        <p class="hypo-teaser">The brain generates real voltages. Can that energy go somewhere else? A thought experiment that sharpened my understanding of what neural electricity actually is.</p>
+        <span class="hypo-issue">CASE FILE #003</span>
+        <h3 class="hypo-title">Can you harvest electricity from a brain?</h3>
+        <p class="hypo-teaser">The brain runs on real voltage. Can any of that go somewhere useful? A thought experiment that humbled me fast.</p>
         <div class="hypo-body">
-          <p>Initial intuition: the brain as a weak battery, neurons as wires, signals harvestable by another system.</p>
-          <p>Refined: neural electricity isn't current in a wire. What propagates along an axon is a traveling wave of local membrane depolarization. Ions cross the membrane locally — they don't flow longitudinally as transferable current.</p>
-          <p>Key distinction: <strong>measuring information vs. acquiring energy</strong>. EEG and patch-clamp resolve voltage with near-zero energy extracted. Harvesting actually yields femtowatts at best, and disrupts neural function.</p>
-          <p>Remaining open questions: could synthetic biology redesign neurons to export charge like electrocytes? Where exactly is the boundary between minimally invasive measurement and energetically disruptive coupling?</p>
+          <p>First instinct: brain as battery, neurons as wires, free energy for the taking.</p>
+          <p>Reality check: neural signals are traveling waves of local depolarization, not current in a wire. Ions move locally — nothing to tap in series.</p>
+          <p><strong>Measuring information ≠ acquiring energy.</strong> EEG reads voltage at near-zero energy cost; actual harvesting yields femtowatts and probably breaks the neuron doing it.</p>
+          <p>Open question I still like: could engineered neurons export charge the way electrocytes do? Where's the line between "measuring" and "stealing"?</p>
         </div>
         <span class="hypo-more"><span class="htog"></span></span>
       </div>
@@ -533,209 +570,304 @@
 </section>
 
 <!-- THOUGHT LAB MINI-SCREEN -->
-<section class="section lab-preview-section" id="lab-preview">
+<section class="section" id="lab-preview">
   <div class="container">
-    <span class="lbl reveal">Featured Tool</span>
-    <h2 class="title reveal">Thought Lab</h2>
-    <p class="sub reveal d1">A local hypothesis engine — type any thought experiment in natural language. It parses it into a structured dynamical model, runs Z3 constraint checking, solves the ODE, and pulls live research from Semantic Scholar &amp; OpenAlex. Runs on my homelab.</p>
+    <span class="lbl reveal">Featured Tools</span>
+    <h2 class="title reveal">Meanwhile, in the lab...</h2>
+    <p class="sub reveal d1">Three things I actually built and actually use — not portfolio decoration. Live-ish feeds below.</p>
   </div>
 
-  <div class="miniscreen-wrap reveal d2">
-    <div class="ms-chrome">
-      <div class="ms-dots"><span></span><span></span><span></span></div>
-      <div class="ms-urlbar">localhost:5173 &mdash; Thought Lab</div>
+  <div class="lab-frame reveal d2">
+    <span class="lab-caption">📟 THOUGHT LAB — LIVE FEED</span>
+    <p class="lab-desc">A local hypothesis engine — type any thought experiment in plain language. It parses it into a
+      structured dynamical model, runs Z3 constraint checking, solves the ODE, and pulls live research from Semantic
+      Scholar &amp; OpenAlex. Runs on my homelab, no cloud bill required.</p>
+    <div class="miniscreen-wrap">
+      <div class="ms-chrome">
+        <div class="ms-dots"><span></span><span></span><span></span></div>
+        <div class="ms-urlbar">localhost:5173 &mdash; Thought Lab</div>
+      </div>
+      <div class="ms-viewport" id="ms-viewport">
+        <div class="ms-cursor" id="ms-cursor"></div>
+        <div class="w95">
+
+          <div class="w95-titlebar">
+            <span>🔬</span><span>Thought Lab</span>
+            <div class="w95-titlebar-btns">
+              <span>_</span><span style="font-size:8px;">□</span><span>✕</span>
+            </div>
+          </div>
+
+          <div class="w95-nav">
+            <button class="w95-tab active">Specimen Log</button>
+            <button class="w95-tab">Laboratory</button>
+            <button class="w95-tab">Archive</button>
+          </div>
+
+          <div class="w95-body">
+
+            <div class="w95-sidebar">
+              <div class="w95-groupbox">
+                <span class="w95-grouplabel">New Specimen</span>
+                <span class="w95-lbl">Title</span>
+                <input class="w95-inp" type="text" value="Cortico-hippocampal priming in AD" readonly/>
+                <span class="w95-lbl">Thought Experiment</span>
+                <textarea class="w95-ta" readonly>What if early psychiatric exposures prime the same circuits that later fail in Alzheimer's?</textarea>
+                <span class="w95-lbl">Domain</span>
+                <select class="w95-sel">
+                  <option selected>neuroscience</option>
+                  <option>dynamical systems</option>
+                  <option>biophysics</option>
+                  <option>biology / genomics</option>
+                </select>
+                <span class="w95-lbl" style="margin-top:4px;">Tags</span>
+                <input class="w95-inp" type="text" value="alzheimer, hippocampus, circuits" readonly/>
+                <button class="w95-btn" style="margin-top:6px;">Log Specimen</button>
+              </div>
+
+              <div class="w95-depth">
+                <div class="w95-depth-title">Research Depth</div>
+                <input type="range" class="w95-range" min="0" max="5" value="3" readonly/>
+                <div class="w95-depth-labels"><span>None</span><span>Max</span></div>
+              </div>
+
+              <button class="w95-btn">Analyse &amp; Cluster</button>
+
+              <div class="w95-stats">
+                <div class="w95-stat"><b>7</b><div class="w95-stat-lbl">Specimens</div></div>
+                <div class="w95-stat"><b>3</b><div class="w95-stat-lbl">Clusters</div></div>
+              </div>
+            </div>
+
+            <div class="w95-main">
+              <div class="w95-list-hdr">Specimen Library &mdash; 7 entries</div>
+              <div class="w95-list">
+
+                <div class="w95-card sel">
+                  <div class="w95-card-title">Cortico-hippocampal priming in early AD</div>
+                  <div class="w95-card-preview">What if early psychiatric exposures — depression, chronic stress, poor sleep — prime the same cortico-hippocampal circuits that later fail...</div>
+                  <div class="w95-card-row">
+                    <span class="w95-badge blue">neuroscience</span>
+                    <span class="w95-tag">alzheimer</span>
+                    <span class="w95-tag">hippocampus</span>
+                    <div class="w95-card-btns">
+                      <button class="w95-cbtn">⚙</button>
+                      <button class="w95-cbtn">✏</button>
+                      <button class="w95-cbtn">→</button>
+                      <button class="w95-cbtn red">✕</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w95-card">
+                  <div class="w95-card-title">Linear state-space view of neurodegeneration</div>
+                  <div class="w95-card-preview">AD progression as a trajectory through high-dimensional biological state space that linearizes under the right coordinate transformation...</div>
+                  <div class="w95-card-row">
+                    <span class="w95-badge">dynamical systems</span>
+                    <span class="w95-tag">state-space</span>
+                    <span class="w95-tag">trajectory</span>
+                    <div class="w95-card-btns">
+                      <button class="w95-cbtn">⚙</button>
+                      <button class="w95-cbtn">✏</button>
+                      <button class="w95-cbtn">→</button>
+                      <button class="w95-cbtn red">✕</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w95-card">
+                  <div class="w95-card-title">Neural electricity harvesting</div>
+                  <div class="w95-card-preview">The brain generates real voltages. Can that electrical energy be harvested by an external device without disrupting neural function?</div>
+                  <div class="w95-card-row">
+                    <span class="w95-badge">biophysics</span>
+                    <span class="w95-tag">electrophysiology</span>
+                    <span class="w95-tag">energy-harvest</span>
+                    <div class="w95-card-btns">
+                      <button class="w95-cbtn">⚙</button>
+                      <button class="w95-cbtn">✏</button>
+                      <button class="w95-cbtn">→</button>
+                      <button class="w95-cbtn red">✕</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w95-card">
+                  <div class="w95-card-title">Connectomics-psychiatry bridge</div>
+                  <div class="w95-card-preview">Early psychiatric conditions share circuit-level substrates with AD — early reversible perturbations of systems that later fail irreversibly...</div>
+                  <div class="w95-card-row">
+                    <span class="w95-badge blue">neuroscience</span>
+                    <span class="w95-tag">connectome</span>
+                    <span class="w95-tag">circuits</span>
+                    <div class="w95-card-btns">
+                      <button class="w95-cbtn">⚙</button>
+                      <button class="w95-cbtn">✏</button>
+                      <button class="w95-cbtn">→</button>
+                      <button class="w95-cbtn red">✕</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w95-card">
+                  <div class="w95-card-title">Echo state networks in schizophrenia</div>
+                  <div class="w95-card-preview">Neurodynamic characterization and prediction of schizophrenia using ESN with serotonin modulation — under review at Research Square...</div>
+                  <div class="w95-card-row">
+                    <span class="w95-badge blue">neuroscience</span>
+                    <span class="w95-tag">ESN</span>
+                    <span class="w95-tag">serotonin</span>
+                    <div class="w95-card-btns">
+                      <button class="w95-cbtn">⚙</button>
+                      <button class="w95-cbtn">✏</button>
+                      <button class="w95-cbtn">→</button>
+                      <button class="w95-cbtn red">✕</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w95-card">
+                  <div class="w95-card-title">Sleep quality and Alzheimer's progression</div>
+                  <div class="w95-card-preview">Investigating whether poor sleep accelerates amyloid accumulation and cognitive decline using structural MRI and cognitive outcomes...</div>
+                  <div class="w95-card-row">
+                    <span class="w95-badge blue">neuroscience</span>
+                    <span class="w95-tag">sleep</span>
+                    <span class="w95-tag">amyloid</span>
+                    <div class="w95-card-btns">
+                      <button class="w95-cbtn">⚙</button>
+                      <button class="w95-cbtn">✏</button>
+                      <button class="w95-cbtn">→</button>
+                      <button class="w95-cbtn red">✕</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w95-card">
+                  <div class="w95-card-title">Bifurcation as disease-onset transition</div>
+                  <div class="w95-card-preview">Disease onset as a bifurcation point — what parameters push the system trajectory from a healthy attractor into a pathological regime?</div>
+                  <div class="w95-card-row">
+                    <span class="w95-badge">dynamical systems</span>
+                    <span class="w95-tag">bifurcation</span>
+                    <span class="w95-tag">phase-transition</span>
+                    <div class="w95-card-btns">
+                      <button class="w95-cbtn">⚙</button>
+                      <button class="w95-cbtn">✏</button>
+                      <button class="w95-cbtn">→</button>
+                      <button class="w95-cbtn red">✕</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="w95-statusbar">
+            <span class="w95-spanel">Thought Lab v0.1 &mdash; local research engine</span>
+            <span class="w95-spanel">2026-05-25</span>
+          </div>
+
+        </div>
+      </div>
     </div>
-    <div class="ms-viewport" id="ms-viewport">
-      <div class="ms-cursor" id="ms-cursor"></div>
-      <div class="w95">
+  </div>
 
-        <div class="w95-titlebar">
-          <span>🔬</span><span>Thought Lab</span>
-          <div class="w95-titlebar-btns">
-            <span>_</span><span style="font-size:8px;">□</span><span>✕</span>
-          </div>
+  <div class="lab-frame reveal d3">
+    <span class="lab-caption">⌨️ BENCHLOG — LIVE FEED</span>
+    <p class="lab-desc">A terminal-based notes / logbook / bookmarks / reference manager, built in Go with Bubble Tea.
+      Ships for Linux, macOS, and Windows — plus a genuinely unhinged Android port that runs the exact same TUI binary
+      inside a terminal emulator activity.</p>
+    <div class="term-frame">
+      <div class="ms-chrome">
+        <div class="ms-dots"><span></span><span></span><span></span></div>
+        <div class="ms-urlbar">~/benchlog &mdash; zsh</div>
+      </div>
+      <div class="term-body">
+        <div class="term-topbar">
+          <span class="term-logo">◉ BENCHLOG<span class="term-cursor">█</span></span>
+          <span class="term-tabs">
+            <span class="term-tab active">▸ 1:NOTES ◂</span><span class="term-sep">·</span>
+            <span class="term-tab">2:refs</span><span class="term-sep">·</span>
+            <span class="term-tab">3:bkmrk</span><span class="term-sep">·</span>
+            <span class="term-tab">4:log</span>
+          </span>
+          <span class="term-clock">14:32</span>
         </div>
-
-        <div class="w95-nav">
-          <button class="w95-tab active">Specimen Log</button>
-          <button class="w95-tab">Laboratory</button>
-          <button class="w95-tab">Archive</button>
+        <div class="term-rule"></div>
+        <div class="term-list">
+          <div class="term-row"><span class="ti ongoing">▸</span> Cortico-hippocampal circuit notes<span class="tg">#alzheimer #circuits</span></div>
+          <div class="term-row"><span class="ti done">✔</span> RADAI onboarding checklist<span class="tg">#radai #worklog</span></div>
+          <div class="term-row sel"><span class="ti ongoing">▸</span> Why does the ODE solver keep diverging<span class="tg">#thoughtlab #debugging</span></div>
+          <div class="term-row"><span class="ti abandoned">✖</span> Bayesian rewrite of the priming model<span class="tg">#scrapped</span></div>
+          <div class="term-row"><span class="ti ongoing">▸</span> Quick Draw Saloon balance ideas<span class="tg">#site #game</span></div>
+          <div class="term-row"><span class="ti done">✔</span> Fix goreleaser windows/arm64 ignore rule<span class="tg">#benchlog #ci</span></div>
         </div>
+        <div class="term-status">↑/↓ navigate · n new · e edit · d delete · f folders · i import · 1/2 switch · q quit</div>
+      </div>
+    </div>
+  </div>
 
-        <div class="w95-body">
-
-          <div class="w95-sidebar">
-            <div class="w95-groupbox">
-              <span class="w95-grouplabel">New Specimen</span>
-              <span class="w95-lbl">Title</span>
-              <input class="w95-inp" type="text" value="Cortico-hippocampal priming in AD" readonly/>
-              <span class="w95-lbl">Thought Experiment</span>
-              <textarea class="w95-ta" readonly>What if early psychiatric exposures prime the same circuits that later fail in Alzheimer's?</textarea>
-              <span class="w95-lbl">Domain</span>
-              <select class="w95-sel">
-                <option selected>neuroscience</option>
-                <option>dynamical systems</option>
-                <option>biophysics</option>
-                <option>biology / genomics</option>
-              </select>
-              <span class="w95-lbl" style="margin-top:4px;">Tags</span>
-              <input class="w95-inp" type="text" value="alzheimer, hippocampus, circuits" readonly/>
-              <button class="w95-btn" style="margin-top:6px;">Log Specimen</button>
-            </div>
-
-            <div class="w95-depth">
-              <div class="w95-depth-title">Research Depth</div>
-              <input type="range" class="w95-range" min="0" max="5" value="3" readonly/>
-              <div class="w95-depth-labels"><span>None</span><span>Max</span></div>
-            </div>
-
-            <button class="w95-btn">Analyse &amp; Cluster</button>
-
-            <div class="w95-stats">
-              <div class="w95-stat"><b>7</b><div class="w95-stat-lbl">Specimens</div></div>
-              <div class="w95-stat"><b>3</b><div class="w95-stat-lbl">Clusters</div></div>
-            </div>
+  <div class="lab-frame reveal d4">
+    <span class="lab-caption">📝 SCRATCHPAD? — LIVE FEED</span>
+    <p class="lab-desc">My actual daily-driver notes app — rich-text editor, sketch canvas, and a local AI chat running
+      on Ollama instead of someone else's API. Wrapped in a native Windows launcher. Local-only, no accounts, no cloud sync.</p>
+    <div class="sp-frame">
+      <div class="ms-chrome">
+        <div class="ms-dots"><span></span><span></span><span></span></div>
+        <div class="ms-urlbar">scratchpad.local</div>
+      </div>
+      <div class="sp-body">
+        <aside class="sp-sidebar">
+          <div class="sp-logo">Scratchpad<span class="q">?</span></div>
+          <div class="sp-tagline">Offline / local-only</div>
+          <nav class="sp-nav">
+            <span class="sp-nav-item active">📚 Library</span>
+            <span class="sp-nav-item">🔍 Search</span>
+            <span class="sp-nav-item">✨ Ask AI</span>
+            <span class="sp-nav-item">🧠 Memory</span>
+            <span class="sp-nav-item">⚙ Settings</span>
+          </nav>
+          <div class="sp-lock">🔒 Lock</div>
+        </aside>
+        <main class="sp-main">
+          <div class="sp-topbar">
+            <span class="sp-back">← Back</span>
+            <span class="sp-breadcrumb">SCRATCHPAD://</span>
+            <span>/</span>
           </div>
-
-          <div class="w95-main">
-            <div class="w95-list-hdr">Specimen Library &mdash; 7 entries</div>
-            <div class="w95-list">
-
-              <div class="w95-card sel">
-                <div class="w95-card-title">Cortico-hippocampal priming in early AD</div>
-                <div class="w95-card-preview">What if early psychiatric exposures — depression, chronic stress, poor sleep — prime the same cortico-hippocampal circuits that later fail...</div>
-                <div class="w95-card-row">
-                  <span class="w95-badge blue">neuroscience</span>
-                  <span class="w95-tag">alzheimer</span>
-                  <span class="w95-tag">hippocampus</span>
-                  <div class="w95-card-btns">
-                    <button class="w95-cbtn">⚙</button>
-                    <button class="w95-cbtn">✏</button>
-                    <button class="w95-cbtn">→</button>
-                    <button class="w95-cbtn red">✕</button>
-                  </div>
-                </div>
+          <div class="sp-content">
+            <div>
+              <div class="sp-section-hdr magenta">✏ New Sketch</div>
+              <div class="sp-section-sub">A blank canvas for stylus scribbling — pen, brush, eraser, colors.</div>
+            </div>
+            <div>
+              <div class="sp-section-hdr dim">📚 Books</div>
+              <div class="sp-grid">
+                <div class="sp-card"><b>Hypothesis Journal</b><span>4 chapters</span></div>
+                <div class="sp-card comic"><b>PsychN Drafts</b><span>9 chapters <em>Comic</em></span></div>
               </div>
-
-              <div class="w95-card">
-                <div class="w95-card-title">Linear state-space view of neurodegeneration</div>
-                <div class="w95-card-preview">AD progression as a trajectory through high-dimensional biological state space that linearizes under the right coordinate transformation...</div>
-                <div class="w95-card-row">
-                  <span class="w95-badge">dynamical systems</span>
-                  <span class="w95-tag">state-space</span>
-                  <span class="w95-tag">trajectory</span>
-                  <div class="w95-card-btns">
-                    <button class="w95-cbtn">⚙</button>
-                    <button class="w95-cbtn">✏</button>
-                    <button class="w95-cbtn">→</button>
-                    <button class="w95-cbtn red">✕</button>
-                  </div>
-                </div>
+            </div>
+            <div>
+              <div class="sp-section-hdr dim">🗒 Notes</div>
+              <div class="sp-grid">
+                <div class="sp-card"><b>RADAI meeting notes</b><span>note</span></div>
+                <div class="sp-card comic"><b>Quick Draw game ideas</b><span>sketch <em>Comic</em></span></div>
+                <div class="sp-card"><b>Groceries (again)</b><span>note</span></div>
               </div>
-
-              <div class="w95-card">
-                <div class="w95-card-title">Neural electricity harvesting</div>
-                <div class="w95-card-preview">The brain generates real voltages. Can that electrical energy be harvested by an external device without disrupting neural function?</div>
-                <div class="w95-card-row">
-                  <span class="w95-badge">biophysics</span>
-                  <span class="w95-tag">electrophysiology</span>
-                  <span class="w95-tag">energy-harvest</span>
-                  <div class="w95-card-btns">
-                    <button class="w95-cbtn">⚙</button>
-                    <button class="w95-cbtn">✏</button>
-                    <button class="w95-cbtn">→</button>
-                    <button class="w95-cbtn red">✕</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="w95-card">
-                <div class="w95-card-title">Connectomics-psychiatry bridge</div>
-                <div class="w95-card-preview">Early psychiatric conditions share circuit-level substrates with AD — early reversible perturbations of systems that later fail irreversibly...</div>
-                <div class="w95-card-row">
-                  <span class="w95-badge blue">neuroscience</span>
-                  <span class="w95-tag">connectome</span>
-                  <span class="w95-tag">circuits</span>
-                  <div class="w95-card-btns">
-                    <button class="w95-cbtn">⚙</button>
-                    <button class="w95-cbtn">✏</button>
-                    <button class="w95-cbtn">→</button>
-                    <button class="w95-cbtn red">✕</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="w95-card">
-                <div class="w95-card-title">Echo state networks in schizophrenia</div>
-                <div class="w95-card-preview">Neurodynamic characterization and prediction of schizophrenia using ESN with serotonin modulation — under review at Research Square...</div>
-                <div class="w95-card-row">
-                  <span class="w95-badge blue">neuroscience</span>
-                  <span class="w95-tag">ESN</span>
-                  <span class="w95-tag">serotonin</span>
-                  <div class="w95-card-btns">
-                    <button class="w95-cbtn">⚙</button>
-                    <button class="w95-cbtn">✏</button>
-                    <button class="w95-cbtn">→</button>
-                    <button class="w95-cbtn red">✕</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="w95-card">
-                <div class="w95-card-title">Sleep quality and Alzheimer's progression</div>
-                <div class="w95-card-preview">Investigating whether poor sleep accelerates amyloid accumulation and cognitive decline using structural MRI and cognitive outcomes...</div>
-                <div class="w95-card-row">
-                  <span class="w95-badge blue">neuroscience</span>
-                  <span class="w95-tag">sleep</span>
-                  <span class="w95-tag">amyloid</span>
-                  <div class="w95-card-btns">
-                    <button class="w95-cbtn">⚙</button>
-                    <button class="w95-cbtn">✏</button>
-                    <button class="w95-cbtn">→</button>
-                    <button class="w95-cbtn red">✕</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="w95-card">
-                <div class="w95-card-title">Bifurcation as disease-onset transition</div>
-                <div class="w95-card-preview">Disease onset as a bifurcation point — what parameters push the system trajectory from a healthy attractor into a pathological regime?</div>
-                <div class="w95-card-row">
-                  <span class="w95-badge">dynamical systems</span>
-                  <span class="w95-tag">bifurcation</span>
-                  <span class="w95-tag">phase-transition</span>
-                  <div class="w95-card-btns">
-                    <button class="w95-cbtn">⚙</button>
-                    <button class="w95-cbtn">✏</button>
-                    <button class="w95-cbtn">→</button>
-                    <button class="w95-cbtn red">✕</button>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
-
-        </div>
-
-        <div class="w95-statusbar">
-          <span class="w95-spanel">Thought Lab v0.1 &mdash; local research engine</span>
-          <span class="w95-spanel">2026-05-25</span>
-        </div>
-
+        </main>
       </div>
     </div>
   </div>
 </section>
 
 <!-- EXPERIENCE -->
-<section class="section" id="experience">
+<section class="section dots" id="experience">
   <div class="container">
     <span class="lbl reveal">Timeline</span>
     <h2 class="title reveal">Experience</h2>
     <div class="timeline">
 
-      <div class="tl-item reveal">
+      <div class="panel tl-item reveal">
         <div class="tl-date">Jan 2026 — Present <span class="badge badge-g">Active</span></div>
         <div class="tl-role">Project Consultant — Neuroimaging &amp; AI</div>
         <div class="tl-org">RADAI Pvt. Ltd. · IIT Bombay Faculty Startup</div>
@@ -745,36 +877,36 @@
         </ul>
       </div>
 
-      <div class="tl-item reveal d1">
+      <div class="panel tl-item reveal d1">
         <div class="tl-date">Jul 2025 — Jan 2026</div>
         <div class="tl-role">Research Intern — Neuroimaging &amp; Radiology</div>
         <div class="tl-org">Koita Centre for Digital Health (KCDH) · IIT Bombay</div>
         <ul class="tl-pts">
-          <li>Collaborated with UT Dallas on structural brain markers of cognitive training in older adults — co-author on resulting publication</li>
-          <li>Collaborated with MAX Healthcare on 2D-to-3D MRI reconstruction with automated brain segmentation and age prediction</li>
+          <li>Worked with UT Dallas on structural brain markers of cognitive training in older adults — co-author on the resulting publication</li>
+          <li>Worked with MAX Healthcare on 2D-to-3D MRI reconstruction with automated brain segmentation and age prediction</li>
         </ul>
       </div>
 
-      <div class="tl-item reveal d2">
+      <div class="panel tl-item reveal d2">
         <div class="tl-date">Feb 2025 — Jul 2025</div>
         <div class="tl-role">Research Intern — Alzheimer's &amp; Sleep</div>
         <div class="tl-org">Rohini Nilekani Centre for Brain and Mind · NIMHANS, Bangalore</div>
         <ul class="tl-pts">
-          <li>Investigated correlation between sleep measures and Alzheimer's progression using cognitive and structural MRI outcomes</li>
+          <li>Studied the correlation between sleep measures and Alzheimer's progression using cognitive and structural MRI outcomes</li>
         </ul>
       </div>
 
-      <div class="tl-item reveal d3">
+      <div class="panel tl-item reveal d3">
         <div class="tl-date">Oct 2023 — Jul 2025</div>
         <div class="tl-role">Research Intern — Precision Neuropsychiatry</div>
         <div class="tl-org">iBrains — Centre for Precision Neuropsychiatry, Bangalore</div>
         <ul class="tl-pts">
           <li>Correlated clinical biomarkers, structural MRI, and multi-omics data to differentiate healthy controls from MCI patients</li>
-          <li>SHAP-based multimodal XAI analysis for Alzheimer's classification</li>
+          <li>Ran SHAP-based multimodal XAI analysis for Alzheimer's classification</li>
         </ul>
       </div>
 
-      <div class="tl-item reveal d4">
+      <div class="panel tl-item reveal d4">
         <div class="tl-date">Jan 2024 — Apr 2024</div>
         <div class="tl-role">GenAI Intern</div>
         <div class="tl-org">GreenPepper Inc.</div>
@@ -788,13 +920,13 @@
 </section>
 
 <!-- PUBLICATIONS -->
-<section class="section pub-section" id="publications">
+<section class="section" id="publications">
   <div class="container">
     <span class="lbl reveal">Research Output</span>
     <h2 class="title reveal">Publications</h2>
     <div class="pub-grid">
 
-      <div class="pub-card reveal">
+      <div class="panel pub-card reveal">
         <div class="pub-meta">
           <span class="pub-date">Nov 2023</span>
           <span class="pub-badge pb-journal">IJRITCC</span>
@@ -807,7 +939,7 @@
         <div class="pub-auth">Sowrirajan et al. · Vol. 11, No. 9, pp. 5045–5049</div>
       </div>
 
-      <div class="pub-card reveal d1">
+      <div class="panel pub-card reveal d1">
         <div class="pub-meta">
           <span class="pub-date">2023</span>
           <span class="pub-badge pb-ieee">IEEE</span>
@@ -820,7 +952,7 @@
         <div class="pub-auth">Sowrirajan &amp; Harish · ICDSAAI 2023</div>
       </div>
 
-      <div class="pub-card reveal d2">
+      <div class="panel pub-card reveal d2">
         <div class="pub-meta">
           <span class="pub-date">2024</span>
           <span class="pub-badge pb-ieee">IEEE</span>
@@ -833,7 +965,7 @@
         <div class="pub-auth">Sowrirajan et al. · ICETCI 2024</div>
       </div>
 
-      <div class="pub-card reveal d3">
+      <div class="panel pub-card reveal d3">
         <div class="pub-meta">
           <span class="pub-date">Preprint</span>
           <span class="pub-badge pb-pre">Under Review</span>
@@ -851,20 +983,19 @@
 </section>
 
 <!-- PROJECTS -->
-<section class="section" id="projects">
+<section class="section dots" id="projects">
   <div class="container">
     <span class="lbl reveal">Built</span>
     <h2 class="title reveal">Projects</h2>
     <div class="projects-grid">
 
-      <div class="proj-card reveal">
+      <div class="panel proj-card reveal">
         <h3 class="proj-name">Thought Lab</h3>
         <p class="proj-tagline">
-          A formal thought experiment engine. Describe any system in natural language
-          — the engine parses it into a structured dynamical model using a deterministic
-          FLA pipeline backed by Semantic Scholar, OpenAlex, and ConceptNet. Simulate
-          it, detect paradoxes via Z3, generate hypothesis trees, and refine equations
-          through a streaming AI assistant.
+          A formal thought-experiment engine. Describe any system in plain language and it
+          parses that into a structured dynamical model via a deterministic pipeline backed by
+          Semantic Scholar, OpenAlex, and ConceptNet. Simulate it, catch paradoxes with Z3,
+          generate hypothesis trees, and refine equations through a streaming AI assistant.
         </p>
         <div class="proj-tech">
           <span class="tech-pill">FastAPI</span>
@@ -874,18 +1005,18 @@
           <span class="tech-pill">Plotly.js</span>
           <span class="tech-pill">Ollama</span>
         </div>
-        <a href="https://github.com/Da4kek" class="btn btn-s" target="_blank" style="font-size:0.82rem;padding:8px 18px;">
-          <i class="fa fa-github"></i> GitHub
+        <a href="https://github.com/Da4kek" class="btn btn-s" target="_blank" style="font-size:0.65rem;">
+          <i class="fa fa-github"></i> GITHUB
         </a>
       </div>
 
-      <div class="proj-card reveal d1">
+      <div class="panel proj-card reveal d1">
         <h3 class="proj-name">PsychN</h3>
         <p class="proj-tagline">
-          A wormhole between neuroscience and philosophy. The same hypotheses on
-          this site — written as long-form essays for curious minds. Where Thought
-          Lab formalizes intuitions into models, PsychN turns them into prose.
-          Psychology. Neuroscience. Philosophy. Statistics.
+          A wormhole between neuroscience and philosophy. The same hypotheses on this site
+          — written as long-form essays for curious minds. Where Thought Lab formalizes
+          intuitions into models, PsychN turns them into prose. Psychology. Neuroscience.
+          Philosophy. Statistics.
         </p>
         <div class="proj-tech">
           <span class="tech-pill purple">Long-form Essays</span>
@@ -893,9 +1024,43 @@
           <span class="tech-pill purple">Fine-tuned LLM</span>
           <span class="tech-pill purple">DPO Training</span>
         </div>
-        <a href="https://github.com/Da4kek" class="btn btn-s" target="_blank" style="font-size:0.82rem;padding:8px 18px;">
-          <i class="fa fa-github"></i> GitHub
+        <span style="font-family:var(--pixel);font-size:0.6rem;color:var(--text-2);">🔒 Private build — not open-sourced yet</span>
+      </div>
+
+      <div class="panel proj-card reveal d2">
+        <h3 class="proj-name">benchlog</h3>
+        <p class="proj-tagline">
+          A terminal-based personal knowledge base — notes, a daily logbook, bookmarks,
+          and a reference manager, all in one keyboard-driven TUI. Built in Go with
+          Bubble Tea. Then ported the exact same binary to run inside a terminal
+          emulator on Android, because it was funnier than not doing it.
+        </p>
+        <div class="proj-tech">
+          <span class="tech-pill">Go</span>
+          <span class="tech-pill">Bubble Tea</span>
+          <span class="tech-pill">Linux / macOS / Windows</span>
+          <span class="tech-pill">Android Port</span>
+        </div>
+        <a href="https://github.com/Da4kek/CmD-set" class="btn btn-s" target="_blank" style="font-size:0.65rem;">
+          <i class="fa fa-github"></i> GITHUB
         </a>
+      </div>
+
+      <div class="panel proj-card reveal d3">
+        <h3 class="proj-name">Scratchpad</h3>
+        <p class="proj-tagline">
+          My actual daily driver. A local-first notes app with a proper rich-text
+          editor, a sketch canvas, and a built-in AI chat that runs on Ollama instead
+          of phoning home to someone else's API. Wrapped in a native Windows launcher
+          so it feels like a real app, not a browser tab I forgot to close.
+        </p>
+        <div class="proj-tech purple">
+          <span class="tech-pill purple">React + TypeScript</span>
+          <span class="tech-pill purple">Tiptap Editor</span>
+          <span class="tech-pill purple">Ollama (local AI)</span>
+          <span class="tech-pill purple">SQLite</span>
+        </div>
+        <span style="font-family:var(--pixel);font-size:0.6rem;color:var(--text-2);">🔒 Private build — not open-sourced yet</span>
       </div>
 
     </div>
@@ -903,12 +1068,12 @@
 </section>
 
 <!-- RESEARCH INTERESTS -->
-<section class="section interests-section" id="interests">
+<section class="section" id="interests">
   <div class="container">
     <span class="lbl reveal">What I think about</span>
     <h2 class="title reveal">Research Interests</h2>
     <div class="clusters-grid">
-      <div class="cluster reveal">
+      <div class="panel cluster reveal">
         <div class="cluster-title">Neurodegeneration</div>
         <div class="cluster-tags">
           <span class="itag">Alzheimer's Disease</span>
@@ -919,7 +1084,7 @@
           <span class="itag">Sleep &amp; AD</span>
         </div>
       </div>
-      <div class="cluster reveal d1">
+      <div class="panel cluster reveal d1">
         <div class="cluster-title">Computational &amp; Systems</div>
         <div class="cluster-tags">
           <span class="itag">Dynamical Systems</span>
@@ -930,7 +1095,7 @@
           <span class="itag">Receptive Fields</span>
         </div>
       </div>
-      <div class="cluster reveal d2">
+      <div class="panel cluster reveal d2">
         <div class="cluster-title">Neuropsychiatry</div>
         <div class="cluster-tags">
           <span class="itag">Schizophrenia</span>
@@ -941,7 +1106,7 @@
           <span class="itag">Serotonin (5-HT)</span>
         </div>
       </div>
-      <div class="cluster reveal d3">
+      <div class="panel cluster reveal d3">
         <div class="cluster-title">AI &amp; Methods</div>
         <div class="cluster-tags">
           <span class="itag">fMRI / Structural MRI</span>
@@ -957,24 +1122,24 @@
 </section>
 
 <!-- ACHIEVEMENTS -->
-<section class="section" id="achievements">
+<section class="section dots" id="achievements">
   <div class="container">
     <span class="lbl reveal">Recognition</span>
     <h2 class="title reveal">Achievements</h2>
     <div class="ach-grid">
-      <div class="ach-card reveal">
+      <div class="panel ach-card reveal">
         <div class="ach-icon">🏆</div>
         <div class="ach-title">Best Outgoing Student — B.Tech CSE (AI &amp; ML)</div>
         <div class="ach-detail">SRM Institute · 2025</div>
       </div>
-      <div class="ach-card reveal d1">
+      <div class="panel ach-card reveal d1">
         <div class="ach-icon">🥇</div>
-        <div class="ach-title">1st Prize — IET Chennai Technical Hackathon</div>
+        <div class="ach-title">1st Prize — IET Technical Hackathon</div>
         <div class="ach-detail">₹20,000 · 2,000+ teams · 2023</div>
       </div>
-      <div class="ach-card reveal d2">
+      <div class="panel ach-card reveal d2">
         <div class="ach-icon">🥈</div>
-        <div class="ach-title">2nd Prize — IET Chennai Technical Hackathon</div>
+        <div class="ach-title">2nd Prize — IET Technical Hackathon</div>
         <div class="ach-detail">₹15,000 · 1,000+ teams · 2022</div>
       </div>
     </div>
@@ -985,9 +1150,45 @@
 <section class="quote-section">
   <div class="container">
     <div class="quote-wrap">
-      <span class="quote-mark">"</span>
-      <p class="quote-text reveal">Brain science is exciting — and the most important unsolved problem of our time.</p>
-      <span class="quote-attr reveal d1">— Anirudh Sowrirajan</span>
+      <div class="quote-bubble reveal">
+        <p class="quote-text">"The brain is the last unsolved bug in the universe. I'm just trying to read the stack trace."</p>
+        <span class="quote-attr">— Anirudh Sowrirajan</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK DRAW SALOON -->
+<section class="section gallery-section" id="gallery">
+  <div class="container">
+    <span class="lbl reveal">Palate Cleanser</span>
+    <h2 class="title reveal">🤠 Quick Draw Saloon</h2>
+    <p class="sub reveal d1">Yes, there's an actual game here. Shoot bandits and gold, leave the cactus alone. 30 seconds, partner.</p>
+
+    <div class="gallery-hud reveal d2">
+      <span class="hud-chip">TIME: <span id="g-time">30</span></span>
+      <span class="hud-chip score">SCORE: <span id="g-score">0</span></span>
+      <span class="hud-chip best">BEST: <span id="g-best">0</span></span>
+      <button class="btn btn-p" id="g-start" style="font-size:0.68rem;">🔫 START</button>
+    </div>
+
+    <div class="gallery-scene reveal d3" id="g-scene">
+      <div class="g-sun"></div>
+      <div class="g-mtn"><div></div><div></div><div></div><div></div></div>
+      <div class="gallery-slots" id="g-slots">
+        <div class="gallery-slot" data-slot="0"><div class="hole"></div></div>
+        <div class="gallery-slot" data-slot="1"><div class="hole"></div></div>
+        <div class="gallery-slot" data-slot="2"><div class="hole"></div></div>
+        <div class="gallery-slot" data-slot="3"><div class="hole"></div></div>
+      </div>
+    </div>
+
+    <div class="gallery-msg reveal d4" id="g-msg"></div>
+    <div class="gallery-legend reveal d4">
+      <span>🤠 <b>Bandit</b> +10</span>
+      <span>🌾 <b>Tumbleweed</b> +5</span>
+      <span>💎 <b>Gold Nugget</b> +20</span>
+      <span>🌵 <b>Cactus</b> −5 (don't!)</span>
     </div>
   </div>
 </section>
@@ -996,30 +1197,19 @@
 <footer>
   <div class="container">
     <div class="footer-inner">
-      <span class="footer-logo">ani.sowrirajan</span>
+      <span class="footer-logo">ANI_SOWRIRAJAN.EXE</span>
       <ul class="footer-socials">
         <li><a href="mailto:anisri477@gmail.com" title="Email"><i class="fa fa-envelope"></i></a></li>
         <li><a href="https://www.linkedin.com/in/anirudhakadark/" title="LinkedIn" target="_blank"><i class="fa fa-linkedin"></i></a></li>
         <li><a href="https://github.com/Da4kek" title="GitHub" target="_blank"><i class="fa fa-github"></i></a></li>
         <li><a href="https://da4kek.github.io/writeups/" title="Blog" target="_blank"><i class="fa fa-rss"></i></a></li>
       </ul>
-      <span class="footer-copy">Handcrafted by Anirudh</span>
+      <span class="footer-copy">No AI ghostwriter — just me, bad puns, and too much coffee.</span>
     </div>
   </div>
 </footer>
 
-<!-- JS -->
-<script src="js/jquery.min.js"></script>
-<script src="js/typed.min.js"></script>
 <script>
-/* TYPED */
-$(function(){
-  $("#typed").typed({
-    strings:["Chennai","everywhere","the intersection of AI &amp; Neuroscience"],
-    typeSpeed:75,backDelay:2000,contentType:"html",loop:true
-  });
-});
-
 /* NAV */
 (function(){
   var n=document.getElementById('main-nav');
@@ -1041,7 +1231,30 @@ function toggleHypo(card){
   if(!open)card.classList.add('open');
 }
 
-/* ── THOUGHT LAB MINI-SCREEN CURSOR ── */
+/* HERO TYPEWRITER (vanilla, no jQuery/typed.js) */
+(function(){
+  var el=document.getElementById('typed');
+  if(!el)return;
+  var strings=['DEBUGGING BRAINS...','TRAINING NEURAL NETS...','PRACTICING QUICK-DRAW...','SHIPPING SIDE PROJECTS...'];
+  var si=0,ci=0,deleting=false;
+  function tick(){
+    var full=strings[si];
+    if(!deleting){
+      ci++;
+      el.textContent=full.slice(0,ci);
+      if(ci===full.length){deleting=true;setTimeout(tick,1600);return;}
+      setTimeout(tick,55);
+    }else{
+      ci--;
+      el.textContent=full.slice(0,ci);
+      if(ci===0){deleting=false;si=(si+1)%strings.length;setTimeout(tick,300);return;}
+      setTimeout(tick,28);
+    }
+  }
+  tick();
+})();
+
+/* THOUGHT LAB MINI-SCREEN CURSOR */
 (function(){
   var vp=document.getElementById('ms-viewport');
   var cur=document.getElementById('ms-cursor');
@@ -1055,57 +1268,6 @@ function toggleHypo(card){
   vp.addEventListener('mouseenter',function(){cur.style.opacity='1';});
 })();
 
-
-/* NEURAL CANVAS */
-(function(){
-  var canvas=document.getElementById('neural-canvas');
-  if(!canvas)return;
-  var ctx=canvas.getContext('2d');
-  var particles=[];
-  var N=62,MAX_D=152;
-
-  function Particle(){
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.vx=(Math.random()-0.5)*0.2;
-    this.vy=(Math.random()-0.5)*0.2;
-    this.r=Math.random()*1.3+0.5;
-  }
-  Particle.prototype.update=function(){
-    this.x+=this.vx;this.y+=this.vy;
-    if(this.x<0||this.x>canvas.width)this.vx*=-1;
-    if(this.y<0||this.y>canvas.height)this.vy*=-1;
-  };
-  Particle.prototype.draw=function(){
-    ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-    ctx.fillStyle='rgba(99,179,237,0.72)';ctx.fill();
-  };
-
-  function init(){
-    canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;
-    particles=[];for(var i=0;i<N;i++)particles.push(new Particle());
-  }
-  function frame(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    for(var i=0;i<particles.length;i++){
-      particles[i].update();particles[i].draw();
-      for(var j=i+1;j<particles.length;j++){
-        var dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
-        var d=Math.sqrt(dx*dx+dy*dy);
-        if(d<MAX_D){
-          ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);
-          ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.strokeStyle='rgba(99,179,237,'+(1-d/MAX_D)*0.2+')';
-          ctx.lineWidth=0.5;ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(frame);
-  }
-  init();frame();
-  window.addEventListener('resize',init,{passive:true});
-})();
-
 /* SMOOTH SCROLL */
 document.querySelectorAll('a[href^="#"]').forEach(function(a){
   a.addEventListener('click',function(e){
@@ -1113,6 +1275,104 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
   });
 });
+
+/* ── QUICK DRAW SALOON GAME ── */
+(function(){
+  var scoreEl=document.getElementById('g-score');
+  var timeEl=document.getElementById('g-time');
+  var bestEl=document.getElementById('g-best');
+  var startBtn=document.getElementById('g-start');
+  var msgEl=document.getElementById('g-msg');
+  var slots=Array.prototype.slice.call(document.querySelectorAll('.gallery-slot'));
+  var scene=document.getElementById('g-scene');
+  if(!scoreEl||!slots.length)return;
+
+  var SPRITES={
+    bandit:{pts:10,svg:'<svg viewBox="0 0 8 8"><rect x="1" y="0" width="6" height="1" fill="#1a1a2e"/><rect x="2" y="1" width="4" height="1" fill="#1a1a2e"/><rect x="1" y="2" width="6" height="1" fill="#c0392b"/><rect x="2" y="3" width="4" height="1" fill="#e8b382"/><rect x="1" y="4" width="6" height="1" fill="#e8b382"/><rect x="1" y="5" width="6" height="1" fill="#3a3a3a"/><rect x="0" y="6" width="8" height="1" fill="#1a1a2e"/><rect x="0" y="7" width="8" height="1" fill="#1a1a2e"/></svg>'},
+    tumbleweed:{pts:5,svg:'<svg viewBox="0 0 8 8"><rect x="3" y="0" width="2" height="1" fill="#a8783c"/><rect x="2" y="1" width="4" height="1" fill="#a8783c"/><rect x="1" y="2" width="6" height="1" fill="#a8783c"/><rect x="0" y="3" width="8" height="1" fill="#c08c4a"/><rect x="0" y="4" width="8" height="1" fill="#c08c4a"/><rect x="1" y="5" width="6" height="1" fill="#a8783c"/><rect x="2" y="6" width="4" height="1" fill="#a8783c"/><rect x="3" y="7" width="2" height="1" fill="#a8783c"/></svg>'},
+    gold:{pts:20,svg:'<svg viewBox="0 0 8 8"><rect x="3" y="0" width="2" height="1" fill="#ffd23f"/><rect x="2" y="1" width="4" height="1" fill="#ffd23f"/><rect x="1" y="2" width="6" height="1" fill="#ffe28a"/><rect x="0" y="3" width="8" height="1" fill="#ffd23f"/><rect x="0" y="4" width="8" height="1" fill="#ffd23f"/><rect x="1" y="5" width="6" height="1" fill="#e0a800"/><rect x="2" y="6" width="4" height="1" fill="#e0a800"/><rect x="3" y="7" width="2" height="1" fill="#e0a800"/></svg>'},
+    cactus:{pts:-5,svg:'<svg viewBox="0 0 8 10"><rect x="3" y="0" width="2" height="1" fill="#1fa955"/><rect x="3" y="1" width="2" height="9" fill="#1fa955"/><rect x="1" y="3" width="2" height="4" fill="#1fa955"/><rect x="5" y="2" width="2" height="4" fill="#1fa955"/></svg>'}
+  };
+  var TYPE_ORDER=['bandit','bandit','bandit','tumbleweed','tumbleweed','cactus','gold'];
+
+  var score=0,timeLeft=30,active=false,spawnTimer=null,countdownTimer=null;
+  var best=parseInt(localStorage.getItem('quickdraw-highscore')||'0',10);
+  bestEl.textContent=best;
+
+  function randomType(){ return TYPE_ORDER[Math.floor(Math.random()*TYPE_ORDER.length)]; }
+
+  function clearSlot(slot){
+    var t=slot.querySelector('.target');
+    if(t){ if(t._timeout) clearTimeout(t._timeout); t.remove(); }
+  }
+
+  function spawn(){
+    if(!active)return;
+    var empty=slots.filter(function(s){return !s.querySelector('.target');});
+    if(!empty.length)return;
+    var slot=empty[Math.floor(Math.random()*empty.length)];
+    var type=randomType();
+    var el=document.createElement('div');
+    el.className='target';
+    el.dataset.type=type;
+    el.innerHTML=SPRITES[type].svg;
+    slot.appendChild(el);
+    var life=650+Math.random()*450;
+    el._timeout=setTimeout(function(){ el.remove(); },life);
+  }
+
+  function floatScore(x,y,text,color){
+    var f=document.createElement('div');
+    f.className='float-score';
+    f.textContent=text;
+    f.style.left=x+'px'; f.style.top=y+'px'; f.style.color=color;
+    scene.appendChild(f);
+    setTimeout(function(){f.remove();},650);
+  }
+
+  slots.forEach(function(slot){
+    slot.addEventListener('click',function(e){
+      if(!active)return;
+      var t=slot.querySelector('.target');
+      if(!t)return;
+      var type=t.dataset.type;
+      var pts=SPRITES[type].pts;
+      score=Math.max(0,score+pts);
+      scoreEl.textContent=score;
+      var rect=slot.getBoundingClientRect(), sceneRect=scene.getBoundingClientRect();
+      floatScore(rect.left-sceneRect.left+18, rect.top-sceneRect.top, (pts>0?'+':'')+pts, pts<0?'#ff4136':'#1fa955');
+      clearSlot(slot);
+    });
+  });
+
+  function tickTime(){
+    timeLeft--;
+    timeEl.textContent=timeLeft;
+    if(timeLeft<=0) endGame();
+  }
+
+  function endGame(){
+    active=false;
+    clearInterval(spawnTimer); clearInterval(countdownTimer);
+    slots.forEach(clearSlot);
+    startBtn.textContent='🔫 PLAY AGAIN';
+    startBtn.disabled=false;
+    if(score>best){ best=score; localStorage.setItem('quickdraw-highscore',best); bestEl.textContent=best; }
+    var flavor = score>=150?'SHARPSHOOTER! 🌟' : score>=80?'NOT BAD, DEPUTY.' : score>=30?'TENDERFOOT.' : 'MISSED THE WHOLE BARN.';
+    msgEl.textContent='Final score: '+score+' — '+flavor;
+  }
+
+  startBtn.addEventListener('click',function(){
+    if(active)return;
+    score=0; timeLeft=30; active=true;
+    scoreEl.textContent=score; timeEl.textContent=timeLeft;
+    msgEl.textContent='';
+    startBtn.textContent='...IN PROGRESS';
+    startBtn.disabled=true;
+    spawnTimer=setInterval(spawn,650);
+    countdownTimer=setInterval(tickTime,1000);
+  });
+})();
 </script>
 </body>
 </html>
