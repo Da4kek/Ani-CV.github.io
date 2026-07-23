@@ -304,6 +304,8 @@
   .pb-ieee    { background: var(--blue); color: #fff; }
   .pb-journal { background: var(--green); color: #fff; }
   .pb-pre     { background: var(--yellow); color: var(--ink); }
+  .pb-work    { background: var(--purple); color: #fff; }
+  .pb-prep    { background: var(--text-2); color: #fff; }
   .pub-title  { font-size: 0.92rem; font-weight: 700; color: var(--ink); line-height: 1.45; flex: 1; }
   .pub-title a { color: inherit; }
   .pub-title a:hover { color: var(--red); }
@@ -331,7 +333,7 @@
   .itag { font-size: 0.78rem; color: var(--ink); background: var(--paper); border: 2px solid var(--ink); padding: 4px 10px; }
 
   /* ── ACHIEVEMENTS ── */
-  .ach-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+  .ach-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
   .ach-card { padding: 24px; text-align: center; transition: transform var(--t); }
   .ach-card:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--ink); }
   .ach-icon { font-size: 1.8rem; margin-bottom: 12px; }
@@ -968,7 +970,7 @@
       <div class="panel pub-card reveal d3">
         <div class="pub-meta">
           <span class="pub-date">Preprint</span>
-          <span class="pub-badge pb-pre">Under Review</span>
+          <span class="pub-badge pb-pre">Unfinished</span>
         </div>
         <div class="pub-title">
           <a href="https://www.researchsquare.com/article/rs-5457834/v1" target="_blank">
@@ -976,6 +978,28 @@
           </a>
         </div>
         <div class="pub-auth">Sowrirajan et al. · doi.org/10.21203/rs.3.rs6254760/v1</div>
+      </div>
+
+      <div class="panel pub-card reveal">
+        <div class="pub-meta">
+          <span class="pub-date">In Progress</span>
+          <span class="pub-badge pb-work">Under Work</span>
+        </div>
+        <div class="pub-title">
+          Sleep Disturbances Predict Cognitive Decline and Structural Neurodegeneration Across the Alzheimer's Disease Continuum: A Longitudinal Cohort Study
+        </div>
+        <div class="pub-auth">Sowrirajan et al.</div>
+      </div>
+
+      <div class="panel pub-card reveal d1">
+        <div class="pub-meta">
+          <span class="pub-date">In Progress</span>
+          <span class="pub-badge pb-prep">Under Preparation</span>
+        </div>
+        <div class="pub-title">
+          Superagers versus Normative Aging: Unique Structural Brain Markers for Multiple Aspects of Complex Skill Learning using Unsupervised Machine Learning
+        </div>
+        <div class="pub-auth">Sowrirajan et al.</div>
       </div>
 
     </div>
@@ -987,6 +1011,7 @@
   <div class="container">
     <span class="lbl reveal">Built</span>
     <h2 class="title reveal">Projects</h2>
+    <p class="sub reveal d1">Projects that keep me on track — half research tools, half productivity habit.</p>
     <div class="projects-grid">
 
       <div class="panel proj-card reveal">
@@ -1141,6 +1166,11 @@
         <div class="ach-icon">🥈</div>
         <div class="ach-title">2nd Prize — IET Technical Hackathon</div>
         <div class="ach-detail">₹15,000 · 1,000+ teams · 2022</div>
+      </div>
+      <div class="panel ach-card reveal d3">
+        <div class="ach-icon">📜</div>
+        <div class="ach-title">Filed Provisional Patent — System and Method for Automatically Generating Quantitative Biomarkers from Heterogeneous Clinical MRI Using AI Models</div>
+        <div class="ach-detail">Inventor · Indian Provisional Patent App. No. 202621032686 · Filed Mar 18, 2026<br>Applicants: IIT Bombay &amp; Max Healthcare Institute Ltd.</div>
       </div>
     </div>
   </div>
